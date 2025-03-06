@@ -50,7 +50,7 @@ const Student = () => {
         <table className="min-w-full text-left table-auto border-collapse text-[0.83rem] whitespace-nowrap">
           <thead>
             <tr className="bg-gray-700 text-gray-100 text-primary">
-              {["SR#", "Name", "Email", "Phone no", "Role", "Actions"].map(
+              {["SR#", "Name", "Email", "Phone no", "Att %", "Role", "Actions"].map(
                 (header) => (
                   <th
                     key={header}
@@ -83,6 +83,9 @@ const Student = () => {
                     {staff.phoneNumber}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
+                    {staff?.attendancePercentage || "Not Yet"} %
+                  </td>
+                  <td className="py-3 px-4 border-b border-secondary">
                     {staff.role}
                   </td>
 
@@ -96,13 +99,13 @@ const Student = () => {
                       </button>
                     </Link>
 
-                    {/* <button
+                    <button
                       onClick={() => handleDelete(staff._id)}
                       className="text-red-500 hover:text-red-400"
                       title="Delete"
                     >
                       <i className="fa fa-trash"></i>
-                    </button> */}
+                    </button>
                   </td>
                 </tr>
               ))}

@@ -19,7 +19,7 @@ export const getClassById = createAsyncThunk(
   async (_id, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get(`/class/${_id}`);
-      return data.class;
+      return data.singleClass;
     } catch (error) {
       return rejectWithValue(error.response?.data.message || error.message);
     }

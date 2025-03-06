@@ -77,6 +77,7 @@ const Student = () => {
                 "DOB",
                 "Email",
                 "Class",
+                "Att %",
                 "Phone",
                 "Address",
                 "Actions",
@@ -105,14 +106,18 @@ const Student = () => {
                     {student.name}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {student.dob}
+                    {new Date(student.dob).toISOString().split("T")[0]}
                   </td>
                   <td className="py-3 px-4border-b border-secondary">
                     {student.email}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {student.class.className}
+                    {student.class?.className || "Not Assigned"}
                   </td>
+                  <td className="py-3 px-4 border-b border-secondary">
+                    {student?.attendancePercentage || "Not Yet"} %
+                  </td>
+
                   <td className="py-3 px-4 border-b border-secondary">
                     {student.phoneNumber}
                   </td>

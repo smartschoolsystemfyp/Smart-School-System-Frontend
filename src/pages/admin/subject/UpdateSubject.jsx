@@ -28,7 +28,7 @@ const CreateSubject = () => {
     e.preventDefault();
     dispatch(updateSubject({ _id: id, subject: formData }))
       .unwrap()
-      .then(() => navigate("/teacher/subjects"))
+      .then(() => navigate("/admin/subjects"))
       .catch((error) => {
         console.error("Error updating subject:", error);
       });

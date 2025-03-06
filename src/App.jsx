@@ -27,6 +27,7 @@ import Class from "./pages/admin/class/Class";
 import CreateClass from "./pages/admin/class/CreateClass";
 import Sidebar from "./components/Sidebar";
 import CreateStaff from "./pages/admin/staff/CreateStaff";
+import UpdateClass from "./pages/admin/class/UpdateClass";
 
 const App = () => {
   const token = useGetToken();
@@ -78,6 +79,7 @@ const AdminRoutes = () => {
             <Route path="student/:id" element={<UpdateStudent />} />
             <Route path="class" element={<Class />} />
             <Route path="class/create" element={<CreateClass />} />
+            <Route path="class/:id" element={<UpdateClass />} />
             <Route path="subjects" element={<Subject />} />
             <Route path="subject/create" element={<CreateSubject />} />
             <Route path="subject/:id" element={<UpdateSubject />} />

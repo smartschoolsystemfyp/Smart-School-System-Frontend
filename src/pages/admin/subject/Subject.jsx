@@ -80,7 +80,7 @@ const Subject = () => {
                     {subject.subjectName}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {subject.class.className}
+                    {subject.class?.className || "Not Assigned"}
                   </td>
 
                   <td className="py-3 pl-8 border-b border-secondary flex items-center space-x-2">

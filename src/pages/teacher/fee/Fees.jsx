@@ -95,19 +95,19 @@ const Fees = () => {
                     {index + 1}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {fee.student.name}
+                    {fee.student?.name}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {fee.student.class.className}
+                    {fee.student.class?.className}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
                     {fee.month}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {fee.markedBy.name}
+                    {fee.markedBy?.name || "Unknown"}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary text-green-500 font-semibold">
-                    {fee.isSubmitted.toString().toUpperCase()}
+                    {fee.isSubmitted ? "Paid" : "Not Paid"}
                   </td>
                 </tr>
               ))}

@@ -49,6 +49,8 @@ const Attendance = () => {
       });
   };
 
+  console.log(attendance)
+
   useEffect(() => {
     dispatch(getAllStudents(selectedClass));
   }, [selectedClass]);
@@ -96,16 +98,20 @@ const Attendance = () => {
                   <td className="border p-2 text-center">{index + 1}</td>
                   <td className="border p-2">{student.name}</td>
                   <td className="border p-2 text-center">
-                    <button
-                      className={`px-4 py-1 rounded transition-all duration-300 ${
-                        attendance[student._id] === "Present"
-                          ? "bg-green-500 text-white"
-                          : "bg-red-500 text-white"
-                      }`}
-                      onClick={() => toggleAttendance(student._id)}
+                    <label
+                      className="inline-flex items-center cursor-pointer"
+                      htmlFor={`toggle-${student._id}`}
                     >
-                      {attendance[student._id] || "Present"}
-                    </button>
+                      <span className="mr-2 text-gray-700"></span>
+                      <input
+                        type="checkbox"
+                        id={`toggle-${student._id}`}
+                        className="toggle-input hidden"
+                        checked={attendance[student._id] === "Present"}
+                        onChange={() => toggleAttendance(student._id)}
+                      />
+                      <span className="toggle-slider"></span>
+                    </label>
                   </td>
                 </tr>
               ))}

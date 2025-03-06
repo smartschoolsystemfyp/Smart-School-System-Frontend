@@ -69,13 +69,21 @@ const Class = () => {
                     {index + 1}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {cls.className}
+                    {cls?.className}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {cls.teacher.name}
+                    {cls?.teacher?.name || "Not Assigned"}
                   </td>
 
                   <td className="py-3 pl-8 border-b border-secondary flex items-center space-x-2">
+                    <Link to={`/admin/class/${cls._id}`}>
+                      <button
+                        className="text-green-500 hover:text-green-400"
+                        title="Edit"
+                      >
+                        <i className="fa fa-edit"></i>
+                      </button>
+                    </Link>
                     <button
                       onClick={() => handleDelete(cls._id)}
                       className="text-red-500 hover:text-red-400"

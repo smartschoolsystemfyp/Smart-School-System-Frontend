@@ -57,7 +57,7 @@ const Attendance = () => {
   }, [selectedAuth]);
 
   return (
-    <section className="p-6 max-w-[95%] mx-auto rounded-xl">
+    <section className="p-4 max-w-[95%] mx-auto rounded-xl">
       <h2 className="text-xl font-semibold mb-4">Mark Attendance</h2>
 
       <div className="mb-4">
@@ -79,11 +79,11 @@ const Attendance = () => {
 
       {selectedAuth && staffs.length > 0 && (
         <div className="overflow-x-auto">
-          <table className="min-w-full text-left border-collapse">
+          <table className="min-w-full text-left border-collapse text-sm">
             <thead>
               <tr className="bg-gray-700 text-gray-100">
                 <th className="border p-2">SR#</th>
-                <th className="border p-2">Staff Name</th>
+                <th className="border p-2 text-center">Staff Name</th>
                 <th className="border p-2 text-center">Attendance</th>
               </tr>
             </thead>
@@ -94,18 +94,22 @@ const Attendance = () => {
                   className="odd:bg-gray-200 hover:bg-gray-300"
                 >
                   <td className="border p-2 text-center">{index + 1}</td>
-                  <td className="border p-2">{staff.name}</td>
+                  <td className="border p-2 text-center">{staff.name}</td>
                   <td className="border p-2 text-center">
-                    <button
-                      className={`px-4 py-1 rounded transition-all duration-300 ${
-                        attendance[staff._id] === "Present"
-                          ? "bg-green-500 text-white"
-                          : "bg-red-500 text-white"
-                      }`}
-                      onClick={() => toggleAttendance(staff._id)}
+                    <label
+                      className="inline-flex items-center cursor-pointer"
+                      htmlFor={`toggle-${staff._id}`}
                     >
-                      {attendance[staff._id] || "Present"}
-                    </button>
+                      <span className="mr-2 text-gray-700"></span>
+                      <input
+                        type="checkbox"
+                        id={`toggle-${staff._id}`}
+                        className="toggle-input hidden"
+                        checked={attendance[staff._id] === "Present"}
+                        onChange={() => toggleAttendance(staff._id)}
+                      />
+                      <span className="toggle-slider"></span>
+                    </label>
                   </td>
                 </tr>
               ))}

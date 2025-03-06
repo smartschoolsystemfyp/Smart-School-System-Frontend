@@ -24,11 +24,10 @@ const UpdateStudent = () => {
       postalCode: "",
       country: "",
     },
-    classId: "",
+    class: "",
   });
 
-  const { classes } = useSelector(state => state.classes);
-
+  const { classes } = useSelector((state) => state.classes);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,7 +46,7 @@ const UpdateStudent = () => {
     e.preventDefault();
     dispatch(updateStudent({ _id: id, student: formData }))
       .unwrap()
-      .then(() => navigate("/teacher/students"))
+      .then(() => navigate("/admin/students"))
       .catch((error) => {
         console.error("Error updating student:", error);
       });
@@ -67,7 +66,7 @@ const UpdateStudent = () => {
           postalCode: student.address.postalCode || "",
           country: student.address.country || "",
         },
-        classId: student.class._id || "",
+        class: student?.class?._id || "",
       });
     }
   }, [student]);
@@ -116,8 +115,8 @@ const UpdateStudent = () => {
           required
         />
         <select
-          name="classId"
-          value={formData.classId}
+          name="class"
+          value={formData.class}
           onChange={handleChange}
           className="border p-2 rounded"
           required
