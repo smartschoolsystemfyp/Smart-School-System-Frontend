@@ -7,7 +7,7 @@ export const getMarks = createAsyncThunk(
   async (marksFilter, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get(
-        `/marks?subjectId=${marksFilter.selectedSubject}&examType=${marksFilter.selectedExamType}`
+        `/marks?subjectId=${marksFilter.selectedSubject}&examType=${marksFilter.selectedExamType}&classId=${marksFilter.selectedClass}`
       );
       return data.marks;
     } catch (error) {

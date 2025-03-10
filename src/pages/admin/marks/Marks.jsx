@@ -10,28 +10,36 @@ const Marks = () => {
   const { subjects, loading: subjectLoading } = useSelector(
     (state) => state.subject
   );
+  const { classes, loading: classLoading } = useSelector(
+    (state) => state.classes
+  );
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedExamType, setSelectedExamType] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("");
+  const [selectedClass, setSelectedClass] = useState("");
 
   const filteredMarks = marks.filter(
     (mark) =>
       mark.student.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (selectedExamType ? mark.examType === selectedExamType : true)
   );
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getAllSubjects(""));
   }, []);
 
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+
   useEffect(() => {
-    dispatch(getMarks({ selectedSubject, selectedExamType }));
-  }, [selectedExamType, selectedSubject]);
+    dispatch(getMarks({ selectedSubject, selectedExamType, selectedClass }));
+  }, [selectedExamType, selectedSubject, selectedClass]);
 
   return (
     <section className="p-3 sm:p-4 rounded-lg w-full h-auto mt-[10px] sm:px-8">
-      {(loading || subjectLoading) && <Loader />}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-0 justify-between px-2 py-4">
+      {(loading || subjectLoading || classLoading) && <Loader />}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-0 justify-between px-2">
         <div className="flex justify-between sm:justify-center items-center gap-4 text-xl sm:text-[1.4rem] font-semibold">
           <div>
             <i className="fas fa-user-graduate mr-2 text-blue-500"></i>
@@ -39,65 +47,68 @@ const Marks = () => {
           </div>
         </div>
 
-        <input
-          type="search"
-          placeholder="Search student by name"
-          className="border border-gray-400 rounded-md p-2 text-sm"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <div className="flex justify-between items-center px-2 py-4">
+          <button
+            onClick={toggleModal}
+            className="bg-blue-500 text-white p-3 w-[100px] rounded-lg font-semibold"
+          >
+            Filter
+          </button>
+        </div>
       </div>
 
-      <div className="my-3 flex gap-2">
-        <button
-          className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
-            selectedExamType === "" ? "border-blue-500" : ""
-          }`}
-          onClick={() => setSelectedExamType("")}
-        >
-          All Exams
-        </button>
-        <button
-          className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
-            selectedExamType === "Mid" ? "border-blue-500" : ""
-          }`}
-          onClick={() => setSelectedExamType("Mid")}
-        >
-          Mid Exam
-        </button>
-        <button
-          className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
-            selectedExamType === "Final" ? "border-blue-500" : ""
-          }`}
-          onClick={() => setSelectedExamType("Final")}
-        >
-          Final Exam
-        </button>
-      </div>
+      <section className="p-3 sm:p-4 rounded-lg w-full h-auto sm:px-8">
+        {(loading || subjectLoading || classLoading) && <Loader />}
 
-      <div className="my-3 flex gap-2">
-        <button
-          className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
-            selectedSubject === "" ? "border-blue-500" : ""
-          }`}
-          onClick={() => setSelectedSubject("")}
-        >
-          All
-        </button>
-        {subjects.map((subject) => (
-          <>
-            <button
-              key={subject._id}
-              className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
-                selectedSubject === subject._id ? "border-blue-500" : ""
-              }`}
-              onClick={() => setSelectedSubject(subject._id)}
-            >
-              {subject.subjectName}
-            </button>
-          </>
-        ))}
-      </div>
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+              <h3 className="text-lg font-semibold mb-4">Filter Marks</h3>
+              <select
+                value={selectedExamType}
+                onChange={(e) => setSelectedExamType(e.target.value)}
+                className="w-full p-2 border rounded mb-2"
+              >
+                <option value="">All Exam Types</option>
+                <option value="Mid">Mid Exam</option>
+                <option value="Final">Final Exam</option>
+              </select>
+              <select
+                value={selectedClass}
+                onChange={(e) => setSelectedClass(e.target.value)}
+                className="w-full p-2 border rounded mb-2"
+              >
+                <option value="">All Classes</option>
+                {classes.map((cls) => (
+                  <option key={cls._id} value={cls._id}>
+                    {cls.className}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={selectedSubject}
+                onChange={(e) => setSelectedSubject(e.target.value)}
+                className="w-full p-2 border rounded mb-2"
+              >
+                <option value="">All Subjects</option>
+                {subjects.map((subject) => (
+                  <option key={subject._id} value={subject._id}>
+                    {subject.subjectName}
+                  </option>
+                ))}
+              </select>
+              <div className="flex justify-end mt-4">
+                <button
+                  onClick={toggleModal}
+                  className="bg-gray-500 text-white p-2 rounded-lg"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
 
       <div id="overflow" className="overflow-x-auto ">
         <table className="min-w-full text-left table-auto border-collapse text-[0.83rem] whitespace-nowrap">
@@ -108,6 +119,7 @@ const Marks = () => {
                 "Student Name",
                 "Email",
                 "Subject",
+                "Class",
                 "Obtained",
                 "Total Marks",
                 "Exam Type",
@@ -140,6 +152,9 @@ const Marks = () => {
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
                     {mark.subject.subjectName}
+                  </td>
+                  <td className="py-3 px-4 border-b border-secondary">
+                    {mark.student.class?.className}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
                     {mark.marksObtained}
