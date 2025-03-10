@@ -10,6 +10,7 @@ const Student = () => {
   const { staffs, loading } = useSelector((state) => state.staff);
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
 
   const filteredStaffs = staffs.filter((staff) =>
     staff.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -22,8 +23,8 @@ const Student = () => {
   }
 
   useEffect(() => {
-    dispatch(getAllStaff(""));
-  }, []);
+    dispatch(getAllStaff(selectedRole));
+  }, [selectedRole]);
 
   return (
     <section className="p-3 sm:p-4 rounded-lg w-full h-auto mt-[10px] sm:px-8">
@@ -48,6 +49,33 @@ const Student = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+      </div>
+
+      <div className="my-3 flex gap-2">
+        <button
+          className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
+            selectedRole === "" ? "border-blue-500" : ""
+          }`}
+          onClick={() => setSelectedRole("")}
+        >
+          All
+        </button>
+        <button
+          className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
+            selectedRole === "teacher" ? "border-blue-500" : ""
+          }`}
+          onClick={() => setSelectedRole("teacher")}
+        >
+          Teachers
+        </button>
+        <button
+          className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
+            selectedRole === "non-teaching" ? "border-blue-500" : ""
+          }`}
+          onClick={() => setSelectedRole("non-teaching")}
+        >
+          Non Teaching
+        </button>
       </div>
 
       <div id="overflow" className="overflow-x-auto ">

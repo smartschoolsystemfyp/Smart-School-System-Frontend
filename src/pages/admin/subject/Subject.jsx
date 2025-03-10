@@ -11,6 +11,10 @@ const Subject = () => {
   const dispatch = useDispatch();
 
   const { subjects, loading } = useSelector((state) => state.subject);
+  const [selectedClass, setSelectedClass] = useState("");
+  const { classes, loading: classLoading } = useSelector(
+    (state) => state.classes
+  );
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -25,12 +29,12 @@ const Subject = () => {
   }
 
   useEffect(() => {
-    dispatch(getAllSubjects(""));
-  }, []);
+    dispatch(getAllSubjects(selectedClass));
+  }, [selectedClass]);
 
   return (
     <section className="p-3 sm:p-4 rounded-lg w-full h-auto mt-[10px] sm:px-8">
-      {loading && <Loader />}
+      {(loading || classLoading) && <Loader />}
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-0 justify-between px-2 py-4">
         <div className="flex justify-between sm:justify-center items-center gap-4 text-xl sm:text-[1.4rem] font-semibold">
           <div>
@@ -51,6 +55,30 @@ const Subject = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+      </div>
+
+      <div className="my-3 flex gap-2">
+        <button
+          className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
+            selectedClass === "" ? "border-blue-500" : ""
+          }`}
+          onClick={() => setSelectedClass("")}
+        >
+          All
+        </button>
+        {classes.map((cls) => (
+          <>
+            <button
+              key={cls._id}
+              className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
+                selectedClass === cls._id ? "border-blue-500" : ""
+              }`}
+              onClick={() => setSelectedClass(cls._id)}
+            >
+              {cls.className}
+            </button>
+          </>
+        ))}
       </div>
 
       <div id="overflow" className="overflow-x-auto ">

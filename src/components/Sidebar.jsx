@@ -86,7 +86,7 @@ const Sidebar = () => {
           School Management
         </h2>
 
-        <ul className="space-y-4 mt-10">
+        <ul className="space-y-3 mt-10">
           {menuItems.map((item, index) =>
             item.section ? (
               <p
