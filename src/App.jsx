@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useGetToken from "./hooks";
 import { getAllClasses } from "./services/class.service";
 import Loader from "./components/Loader";
+import Marks from "./pages/admin/marks/Marks";
 
 const AdminLogin = lazy(() => import("./pages/auth/AdminLogin"));
 const AdminRegister = lazy(() => import("./pages/auth/AdminRegister"));
@@ -83,6 +84,7 @@ const AdminRoutes = () => {
               <Route path="student/create" element={<CreateStudent />} />
               <Route path="student/:id" element={<UpdateStudent />} />
               <Route path="class" element={<Class />} />
+              <Route path="marks" element={<Marks />} />
               <Route path="class/create" element={<CreateClass />} />
               <Route path="class/:id" element={<UpdateClass />} />
               <Route path="subjects" element={<Subject />} />

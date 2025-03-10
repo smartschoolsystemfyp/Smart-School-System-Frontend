@@ -2,6 +2,19 @@ import axiosInstance from "../axios/axiosInstance";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
+export const getMarks = createAsyncThunk(
+  "marks/getMarks",
+  async (marksFilter, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.get(
+        `/marks?subjectId=${marksFilter.selectedSubject}&examType=${marksFilter.selectedExamType}`
+      );
+      return data.marks;
+    } catch (error) {
+      return rejectWithValue(error.response?.data.message || error.message);
+    }
+  }
+);
 
 export const updateMark = createAsyncThunk(
   "marks/updateMark",
@@ -34,7 +47,7 @@ export const bulkUploadMarks = createAsyncThunk(
   async (marks, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.post(`/marks/bulk`, marks);
-      console.log(data)
+      console.log(data);
       toast.success(data.message);
       return data.marks;
     } catch (error) {

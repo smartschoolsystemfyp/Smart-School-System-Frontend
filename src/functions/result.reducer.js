@@ -3,6 +3,7 @@ import {
   updateMark,
   deleteMark,
   bulkUploadMarks,
+  getMarks,
 } from "../services/result.service";
 
 const initialState = {
@@ -18,6 +19,19 @@ const resultSlice = createSlice({
   extraReducers: (builder) => {
     builder
 
+      // Handling the getMarks action
+      .addCase(getMarks.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getMarks.fulfilled, (state, action) => {
+        state.loading = false;
+        state.marks = action.payload;
+      })
+      .addCase(getMarks.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Failed to update mark";
+      })
       // Handling the updateMark action
       .addCase(updateMark.pending, (state) => {
         state.loading = true;

@@ -19,6 +19,7 @@ const menuItems = [
     icon: "fas fa-book-open",
   },
   { label: "Classes Management", path: "/admin/class", icon: "fas fa-school" },
+  { label: "Marks Management", path: "/admin/marks", icon: "fas fa-school" },
   {
     label: "Mark Attendance",
     path: "/admin/attendance/mark",
