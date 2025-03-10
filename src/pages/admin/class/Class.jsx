@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteClass, getAllClasses } from "../../../services/class.service";
+import Loader from "../../../components/Loader";
 
 const Class = () => {
   const dispatch = useDispatch();
 
-  const { classes } = useSelector((state) => state.classes);
+  const { classes, loading } = useSelector((state) => state.classes);
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -15,15 +16,18 @@ const Class = () => {
   );
 
   function handleDelete(id) {
-    dispatch(deleteClass(id));
+    if (window.confirm("Are you sure you want to delete?")) {
+      dispatch(deleteClass(id));
+    }
   }
 
   useEffect(() => {
-    dispatch(getAllClasses());
+    dispatch(getAllClasses({}));
   }, []);
 
   return (
     <section className="p-3 sm:p-4 rounded-lg w-full h-auto mt-[10px] sm:px-8">
+      {loading && <Loader />}
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-0 justify-between px-2 py-4">
         <div className="flex justify-between sm:justify-center items-center gap-4 text-xl sm:text-[1.4rem] font-semibold">
           <div>
@@ -39,7 +43,7 @@ const Class = () => {
 
         <input
           type="search"
-          placeholder="Search Student by name"
+          placeholder="Search class by name"
           className="border border-gray-400 rounded-md p-2 text-sm"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -49,7 +53,7 @@ const Class = () => {
       <div id="overflow" className="overflow-x-auto ">
         <table className="min-w-full text-left table-auto border-collapse text-[0.83rem] whitespace-nowrap">
           <thead>
-            <tr className="bg-gray-700 text-gray-100 text-primary">
+            <tr className="bg-[#212121] text-gray-100 text-primary">
               {["SR#", "Class", "Class Teacher", "Actions"].map((header) => (
                 <th
                   key={header}

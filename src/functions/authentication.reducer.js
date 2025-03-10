@@ -54,6 +54,7 @@ const authenticationSlice = createSlice({
         state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
+        console.log(action.payload)
         if (action.payload.auth === "admin") state.admin = action.payload.data;
         else if (action.payload.auth === "staff") {
           state.teacher = action.payload.data;

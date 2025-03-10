@@ -5,29 +5,12 @@ import {
   deleteStudent,
   getAllStudents,
 } from "../../../services/student.service";
+import Loader from "../../../components/Loader";
 
 const Student = () => {
   const dispatch = useDispatch();
-  // const students = [
-  //   {
-  //     _id: "6798b8fb494ec0b098dea2a7",
-  //     name: "Hamza",
-  //     dob: "2000-05-12",
-  //     email: "hamza@gmail.com",
-  //     phoneNumber: "12345678961",
-  //     class: { _id: "6798b63442cd1a375bf8e004", className: "BS Hons" },
-  //     registrationDate: "2025-01-28",
-  //     address: {
-  //       street: "123 Main Street",
-  //       city: "Lahore",
-  //       state: "Punjab",
-  //       postalCode: "54000",
-  //       country: "Pakistan",
-  //     },
-  //   },
-  // ];
 
-  const { students } = useSelector((state) => state.student);
+  const { students, loading } = useSelector((state) => state.student);
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -36,7 +19,9 @@ const Student = () => {
   );
 
   function handleDelete(id) {
-    dispatch(deleteStudent(id));
+    if (window.confirm("Are you sure you want to delete?")) {
+      dispatch(deleteStudent(id));
+    }
   }
 
   useEffect(() => {
@@ -45,6 +30,7 @@ const Student = () => {
 
   return (
     <section className="p-3 sm:p-4 rounded-lg w-full h-auto mt-[10px] sm:px-8">
+      {loading && <Loader />}
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-0 justify-between px-2 py-4">
         <div className="flex justify-between sm:justify-center items-center gap-4 text-xl sm:text-[1.4rem] font-semibold">
           <div>
@@ -60,7 +46,7 @@ const Student = () => {
 
         <input
           type="search"
-          placeholder="Search Student by name"
+          placeholder="Search student by name"
           className="border border-gray-400 rounded-md p-2 text-sm"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -70,7 +56,7 @@ const Student = () => {
       <div id="overflow" className="overflow-x-auto ">
         <table className="min-w-full text-left table-auto border-collapse text-[0.83rem] whitespace-nowrap">
           <thead>
-            <tr className="bg-gray-700 text-gray-100 text-primary">
+            <tr className="bg-[#212121] text-gray-100 text-primary">
               {[
                 "SR#",
                 "Name",

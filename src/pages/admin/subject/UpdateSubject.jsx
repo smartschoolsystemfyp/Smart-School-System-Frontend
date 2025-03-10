@@ -5,6 +5,7 @@ import {
 } from "../../../services/subject.service";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import Loader from "../../../components/Loader";
 
 const CreateSubject = () => {
   const { id } = useParams();
@@ -17,7 +18,9 @@ const CreateSubject = () => {
     classId: "",
   });
 
-  const { classes } = useSelector((state) => state.classes);
+  const { classes, loading: classLoading } = useSelector(
+    (state) => state.classes
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,6 +52,7 @@ const CreateSubject = () => {
 
   return (
     <div className="flex items-center justify-center min-h-[88vh]">
+      {classLoading && <Loader />}
       <section className="p-6 w-full max-w-md bg-white shadow-lg rounded-xl">
         <h2 className="text-xl font-semibold mb-4">Update Subject</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">

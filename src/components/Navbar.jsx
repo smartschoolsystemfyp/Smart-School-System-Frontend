@@ -14,12 +14,14 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    dispatch(logoutTeacher())
-      .unwrap()
-      .then(() => navigate("/"))
-      .catch((error) => {
-        console.error("Error logout teacher:", error);
-      });
+    if (window.confirm("Are you sure you want to logout?")) {
+      dispatch(logoutTeacher())
+        .unwrap()
+        .then(() => navigate("/"))
+        .catch((error) => {
+          console.error("Error logout teacher:", error);
+        });
+    }
   };
 
   const links = [

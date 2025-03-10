@@ -4,7 +4,7 @@ import { createStaff } from "../../../services/staff.service";
 
 const CreateStaff = () => {
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.student);
+  const { loading } = useSelector((state) => state.staff);
 
   const [formData, setFormData] = useState({
     name: "",

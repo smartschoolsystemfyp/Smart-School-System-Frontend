@@ -7,6 +7,7 @@ import {
 } from "../../../services/attendance.service";
 import { useNavigate } from "react-router-dom";
 import { getAllStaff } from "../../../services/staff.service";
+import Loader from "../../../components/Loader";
 
 const Attendance = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,9 @@ const Attendance = () => {
   const { loading } = useSelector((state) => state.attendance);
 
   const [selectedAuth, setSelectedAuth] = useState("");
+  const [selectedDate, setSelectedDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
   const [attendance, setAttendance] = useState({});
 
   const handleClassChange = (e) => {
@@ -39,7 +43,7 @@ const Attendance = () => {
   const handleSubmit = async () => {
     const attendanceRecords = Object.entries(attendance).map(
       ([staffId, status]) => ({
-        date: new Date().toISOString().split("T")[0],
+        date: selectedDate,
         staffId,
         status,
       })
@@ -52,29 +56,57 @@ const Attendance = () => {
       });
   };
 
-  useEffect(() => {
+  function handleFromSubmit(e) {
+    e.preventDefault();
     dispatch(getAllStaff(selectedAuth));
-  }, [selectedAuth]);
+  }
 
   return (
     <section className="p-4 max-w-[95%] mx-auto rounded-xl">
+      {loading && <Loader />}
       <h2 className="text-xl font-semibold mb-4">Mark Attendance</h2>
 
-      <div className="mb-4">
-        <label className="font-medium">Select Authority:</label>
-        <select
-          className="ml-2 p-2 border rounded-md"
-          value={selectedAuth}
-          onChange={handleClassChange}
-        >
-          <option value="">-- Select Authority --</option>
-          <option value={"Teacher"}>Teacher</option>
-          <option value={"Non-Teaching"}>Non Teaching</option>
-        </select>
-      </div>
+      {staffs.length === 0 && (
+        <div className="h-[70vh] flex justify-center items-center">
+          <form
+            onSubmit={handleFromSubmit}
+            className="bg-white p-6 rounded-lg  w-full max-w-md"
+          >
+            <div className="mb-4">
+              <label className="font-medium text-gray-600">
+                Select Authority:
+              </label>
+              <select
+                className="ml-2 p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                value={selectedAuth}
+                onChange={handleClassChange}
+                required
+              >
+                <option value="">-- Select Authority --</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Non-Teaching">Non-Teaching</option>
+              </select>
+            </div>
 
-      {selectedAuth && staffs.length === 0 && (
-        <p className="text-red-500">No staffs available for this class.</p>
+            <div className="mb-4">
+              <label className="font-medium text-gray-600">Select Date:</label>
+              <input
+                className="border p-2 w-full rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-300"
+            >
+              Get Sheet
+            </button>
+          </form>
+        </div>
       )}
 
       {selectedAuth && staffs.length > 0 && (

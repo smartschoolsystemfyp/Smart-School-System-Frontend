@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createStudent } from "../../../services/student.service";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "../../../components/Loader";
 
 const CreateStudent = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,9 @@ const CreateStudent = () => {
     classId: "",
   });
 
-  const { classes } = useSelector(state => state.classes);
+  const { classes, loading: classLoading } = useSelector(
+    (state) => state.classes
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -65,6 +68,8 @@ const CreateStudent = () => {
 
   return (
     <section className="p-4 max-w-lg mx-auto bg-white shadow-md rounded-md my-9">
+      {classLoading && <Loader />}
+
       <h2 className="text-xl font-semibold mb-4">Create Student</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input

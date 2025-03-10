@@ -4,9 +4,11 @@ import toast from "react-hot-toast";
 
 export const getAllClasses = createAsyncThunk(
   "class/getAllClasses",
-  async (_, { rejectWithValue }) => {
+  async ({ teacher }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.get(`/class`);
+      const { data } = await axiosInstance.get(
+        `/class?teacherId=${teacher || ""}`
+      );
       return data.classes;
     } catch (error) {
       return rejectWithValue(error.response?.data.message || error.message);

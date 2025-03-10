@@ -5,11 +5,12 @@ import {
   deleteSubject,
   getAllSubjects,
 } from "../../../services/subject.service";
+import Loader from "../../../components/Loader";
 
 const Subject = () => {
   const dispatch = useDispatch();
 
-  const { subjects } = useSelector((state) => state.subject);
+  const { subjects, loading } = useSelector((state) => state.subject);
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -18,7 +19,9 @@ const Subject = () => {
   );
 
   function handleDelete(id) {
-    dispatch(deleteSubject(id));
+    if (window.confirm("Are you sure you want to delete?")) {
+      dispatch(deleteSubject(id));
+    }
   }
 
   useEffect(() => {
@@ -27,6 +30,7 @@ const Subject = () => {
 
   return (
     <section className="p-3 sm:p-4 rounded-lg w-full h-auto mt-[10px] sm:px-8">
+      {loading && <Loader />}
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-0 justify-between px-2 py-4">
         <div className="flex justify-between sm:justify-center items-center gap-4 text-xl sm:text-[1.4rem] font-semibold">
           <div>
@@ -42,7 +46,7 @@ const Subject = () => {
 
         <input
           type="search"
-          placeholder="Search Student by name"
+          placeholder="Search subject by name"
           className="border border-gray-400 rounded-md p-2 text-sm"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -52,7 +56,7 @@ const Subject = () => {
       <div id="overflow" className="overflow-x-auto ">
         <table className="min-w-full text-left table-auto border-collapse text-[0.83rem] whitespace-nowrap">
           <thead>
-            <tr className="bg-gray-700 text-gray-100 text-primary">
+            <tr className="bg-[#212121] text-gray-100 text-primary">
               {["SR#", "Subject Name", "Class Name", "Actions"].map(
                 (header) => (
                   <th

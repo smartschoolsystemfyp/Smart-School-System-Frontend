@@ -12,6 +12,10 @@ const Attendance = () => {
   const { loading } = useSelector((state) => state.attendance);
 
   const [selectedClass, setSelectedClass] = useState("");
+  const [selectedDate, setSelectedDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+
   const [attendance, setAttendance] = useState({});
 
   const handleClassChange = (e) => {
@@ -36,47 +40,70 @@ const Attendance = () => {
   const handleSubmit = async () => {
     const attendanceRecords = Object.entries(attendance).map(
       ([studentId, status]) => ({
-        date: new Date().toISOString().split("T")[0],
+        date: selectedDate,
         studentId,
         status,
       })
     );
     dispatch(markStudentAttendance(attendanceRecords))
       .unwrap()
-      .then(() => navigate("/teacher/dashboard"))
+      .then(() => navigate("/teacher/"))
       .catch((error) => {
         console.error("Error updating attendance:", error);
       });
   };
 
-  console.log(attendance)
-
-  useEffect(() => {
+  function handleFromSubmit(e) {
+    e.preventDefault();
+    console.log("first")
     dispatch(getAllStudents(selectedClass));
-  }, [selectedClass]);
+  }
 
   return (
     <section className="p-6 max-w-[95%] mx-auto rounded-xl">
       <h2 className="text-xl font-semibold mb-4">Mark Attendance</h2>
 
-      <div className="mb-4">
-        <label className="font-medium">Select Class:</label>
-        <select
-          className="ml-2 p-2 border rounded-md"
-          value={selectedClass}
-          onChange={handleClassChange}
-        >
-          <option value="">-- Select Class --</option>
-          {classes.map((cls) => (
-            <option key={cls._id} value={cls._id}>
-              {cls.className}
-            </option>
-          ))}
-        </select>
-      </div>
+      {students.length === 0 && (
+        <div className="h-[70vh] flex justify-center items-center">
+          <form
+            onSubmit={handleFromSubmit}
+            className="bg-white p-6 rounded-lg  w-full max-w-md"
+          >
+            <div className="mb-4">
+              <label className="font-medium text-gray-600">Select Class:</label>
+              <select
+                className="ml-2 p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                value={selectedClass}
+                onChange={handleClassChange}
+              >
+                <option value="">-- Select Class --</option>
+                {classes.map((cls) => (
+                  <option key={cls._id} value={cls._id}>
+                    {cls.className}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-      {selectedClass && students.length === 0 && (
-        <p className="text-red-500">No students available for this class.</p>
+            <div className="mb-4">
+              <label className="font-medium text-gray-600">Select Date:</label>
+              <input
+                className="border p-2 w-full rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-300"
+            >
+              Get Sheet
+            </button>
+          </form>
+        </div>
       )}
 
       {selectedClass && students.length > 0 && (
