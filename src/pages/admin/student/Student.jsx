@@ -59,7 +59,9 @@ const Student = () => {
 
       <div className="my-3 flex gap-2">
         <button
-          className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${selectedClass === "" ? "border-blue-500" : ""}`}
+          className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
+            selectedClass === "" ? "border-blue-500" : ""
+          }`}
           onClick={() => setSelectedClass("")}
         >
           All
@@ -68,7 +70,9 @@ const Student = () => {
           <>
             <button
               key={cls._id}
-              className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${selectedClass === cls._id ? "border-blue-500" : ""}`}
+              className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
+                selectedClass === cls._id ? "border-blue-500" : ""
+              }`}
               onClick={() => setSelectedClass(cls._id)}
             >
               {cls.className}
@@ -84,12 +88,21 @@ const Student = () => {
               {[
                 "SR#",
                 "Name",
-                "DOB",
+                "Roll No.",
+                "Father Name",
+                "MotherName",
+                "Dob",
                 "Email",
-                "Class",
-                "Att %",
-                "Phone",
+                "Phone Number",
+                "B -Form",
                 "Address",
+                "Admission Date",
+                "Blood Group",
+                "Religion",
+                "Cast",
+                "Class",
+                "Orphan",
+                "Att %",
                 "Actions",
               ].map((header) => (
                 <th
@@ -116,23 +129,53 @@ const Student = () => {
                     {student.name}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
+                    {student.rollNumber}
+                  </td>
+                  <td className="py-3 px-4 border-b border-secondary">
+                    {student.fatherName}
+                  </td>
+                  <td className="py-3 px-4 border-b border-secondary">
+                    {student.motherName}
+                  </td>
+                  <td className="py-3 px-4 border-b border-secondary">
                     {new Date(student.dob).toISOString().split("T")[0]}
                   </td>
-                  <td className="py-3 px-4border-b border-secondary">
+                  <td className="py-3 px-4 border-b border-secondary">
                     {student.email}
+                  </td>
+                  <td className="py-3 px-4 border-b border-secondary">
+                    {student.phoneNumber}
+                  </td>
+                  <td className="py-3 px-4border-b border-secondary">
+                    {student.bFormNumber}
+                  </td>
+                  <td className="py-3 px-4 border-b border-secondary">
+                    {student.address}
+                  </td>
+                  <td className="py-3 px-4 border-b border-secondary">
+                    {
+                      new Date(student.admissionDate)
+                        .toISOString()
+                        .split("T")[0]
+                    }
+                  </td>
+                  <td className="py-3 px-4 border-b border-secondary">
+                    {student.bloodGroup}
+                  </td>
+                  <td className="py-3 px-4 border-b border-secondary">
+                    {student.religion}
+                  </td>
+                  <td className="py-3 px-4 border-b border-secondary">
+                    {student.cast}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
                     {student.class?.className || "Not Assigned"}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
+                    {student.orphan}
+                  </td>
+                  <td className="py-3 px-4 border-b border-secondary">
                     {student?.attendancePercentage || "Not Yet"} %
-                  </td>
-
-                  <td className="py-3 px-4 border-b border-secondary">
-                    {student.phoneNumber}
-                  </td>
-                  <td className="py-3 px-4 border-b border-secondary">
-                    {student.address.street}
                   </td>
 
                   <td className="py-3 pl-8 border-b border-secondary flex items-center space-x-2">

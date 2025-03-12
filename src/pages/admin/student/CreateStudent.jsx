@@ -5,60 +5,55 @@ import Loader from "../../../components/Loader";
 
 const CreateStudent = () => {
   const dispatch = useDispatch();
-
   const { loading } = useSelector((state) => state.student);
-
-  const [formData, setFormData] = useState({
-    name: "",
-    dob: "",
-    email: "",
-    phoneNumber: "",
-    address: {
-      street: "",
-      city: "",
-      state: "",
-      postalCode: "",
-      country: "",
-    },
-    classId: "",
-  });
-
   const { classes, loading: classLoading } = useSelector(
     (state) => state.classes
   );
 
+  const [formData, setFormData] = useState({
+    name: "",
+    rollNumber: "",
+    fatherName: "",
+    motherName: "",
+    dob: "",
+    email: "",
+    phoneNumber: "",
+    bFormNumber: "",
+    address: "",
+    admissionDate: "",
+    bloodGroup: "",
+    religion: "",
+    cast: "",
+    classId: "",
+    orphan: "",
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name.startsWith("address.")) {
-      const addressField = name.split(".")[1];
-      setFormData((prev) => ({
-        ...prev,
-        address: { ...prev.address, [addressField]: value },
-      }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     dispatch(createStudent(formData))
       .unwrap()
       .then(() =>
         setFormData({
           name: "",
+          rollNumber: "",
+          fatherName: "",
+          motherName: "",
           dob: "",
           email: "",
           phoneNumber: "",
-          address: {
-            street: "",
-            city: "",
-            state: "",
-            postalCode: "",
-            country: "",
-          },
+          bFormNumber: "",
+          address: "",
+          admissionDate: "",
+          bloodGroup: "",
+          religion: "",
+          cast: "",
           classId: "",
+          orphan: "",
         })
       )
       .catch((error) => {
@@ -66,10 +61,11 @@ const CreateStudent = () => {
       });
   };
 
+  
+
   return (
     <section className="p-4 max-w-lg mx-auto bg-white shadow-md rounded-md my-9">
       {classLoading && <Loader />}
-
       <h2 className="text-xl font-semibold mb-4">Create Student</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
@@ -77,6 +73,33 @@ const CreateStudent = () => {
           name="name"
           placeholder="Name"
           value={formData.name}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="rollNumber"
+          placeholder="Roll Number"
+          value={formData.rollNumber}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="fatherName"
+          placeholder="Father Name"
+          value={formData.fatherName}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="motherName"
+          placeholder="Mother Name"
+          value={formData.motherName}
           onChange={handleChange}
           className="border p-2 rounded"
           required
@@ -107,6 +130,59 @@ const CreateStudent = () => {
           className="border p-2 rounded"
           required
         />
+        <input
+          type="text"
+          name="bFormNumber"
+          placeholder="B-Form Number"
+          value={formData.bFormNumber}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="address"
+          placeholder="Address"
+          value={formData.address}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="date"
+          name="admissionDate"
+          value={formData.admissionDate}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="bloodGroup"
+          placeholder="Blood Group"
+          value={formData.bloodGroup}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="religion"
+          placeholder="Religion"
+          value={formData.religion}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="cast"
+          placeholder="Cast"
+          value={formData.cast}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
         <select
           name="classId"
           value={formData.classId}
@@ -121,54 +197,17 @@ const CreateStudent = () => {
             </option>
           ))}
         </select>
-
-        <h3 className="font-medium">Address</h3>
-        <input
-          type="text"
-          name="address.street"
-          placeholder="Street"
-          value={formData.address.street}
+        <select
+          name="orphan"
+          value={formData.orphan}
           onChange={handleChange}
           className="border p-2 rounded"
           required
-        />
-        <input
-          type="text"
-          name="address.city"
-          placeholder="City"
-          value={formData.address.city}
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
-        <input
-          type="text"
-          name="address.state"
-          placeholder="State"
-          value={formData.address.state}
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
-        <input
-          type="text"
-          name="address.postalCode"
-          placeholder="Postal Code"
-          value={formData.address.postalCode}
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
-        <input
-          type="text"
-          name="address.country"
-          placeholder="Country"
-          value={formData.address.country}
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
-
+        >
+          <option value="">Orphan Status</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
         <button
           type="submit"
           className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"

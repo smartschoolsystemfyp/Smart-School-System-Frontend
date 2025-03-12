@@ -15,17 +15,20 @@ const UpdateStudent = () => {
 
   const [formData, setFormData] = useState({
     name: "",
+    rollNumber: "",
+    fatherName: "",
+    motherName: "",
     dob: "",
     email: "",
     phoneNumber: "",
-    address: {
-      street: "",
-      city: "",
-      state: "",
-      postalCode: "",
-      country: "",
-    },
+    bFormNumber: "",
+    address: "",
+    admissionDate: "",
+    bloodGroup: "",
+    religion: "",
+    cast: "",
     class: "",
+    orphan: false,
   });
 
   const { classes, loading: classLoading } = useSelector(
@@ -33,16 +36,11 @@ const UpdateStudent = () => {
   );
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name.startsWith("address.")) {
-      const addressField = name.split(".")[1];
-      setFormData((prev) => ({
-        ...prev,
-        address: { ...prev.address, [addressField]: value },
-      }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
   const handleSubmit = (e) => {
@@ -50,26 +48,29 @@ const UpdateStudent = () => {
     dispatch(updateStudent({ _id: id, student: formData }))
       .unwrap()
       .then(() => navigate("/admin/students"))
-      .catch((error) => {
-        console.error("Error updating student:", error);
-      });
+      .catch((error) => console.error("Error updating student:", error));
   };
 
   useEffect(() => {
     if (student) {
       setFormData({
         name: student.name || "",
+        rollNumber: student.rollNumber || "",
+        fatherName: student.fatherName || "",
+        motherName: student.motherName || "",
         dob: student.dob ? student.dob.split("T")[0] : "",
         email: student.email || "",
         phoneNumber: student.phoneNumber || "",
-        address: {
-          street: student.address.street || "",
-          city: student.address.city || "",
-          state: student.address.state || "",
-          postalCode: student.address.postalCode || "",
-          country: student.address.country || "",
-        },
-        class: student?.class?._id || "",
+        bFormNumber: student.bFormNumber || "",
+        address: student.address || "",
+        admissionDate: student.admissionDate
+          ? student.admissionDate.split("T")[0]
+          : "",
+        bloodGroup: student.bloodGroup || "",
+        religion: student.religion || "",
+        cast: student.cast || "",
+        class: student.class._id || "",
+        orphan: student.orphan ? "Yes" : "No",
       });
     }
   }, [student]);
@@ -88,6 +89,33 @@ const UpdateStudent = () => {
           name="name"
           placeholder="Name"
           value={formData.name}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="rollNumber"
+          placeholder="Roll Number"
+          value={formData.rollNumber}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="fatherName"
+          placeholder="Father Name"
+          value={formData.fatherName}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="motherName"
+          placeholder="Mother Name"
+          value={formData.motherName}
           onChange={handleChange}
           className="border p-2 rounded"
           required
@@ -118,6 +146,60 @@ const UpdateStudent = () => {
           className="border p-2 rounded"
           required
         />
+        <input
+          type="text"
+          name="bFormNumber"
+          placeholder="B-Form Number"
+          value={formData.bFormNumber}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="address"
+          placeholder="Address"
+          value={formData.address}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="date"
+          name="admissionDate"
+          value={formData.admissionDate}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="bloodGroup"
+          placeholder="Blood Group"
+          value={formData.bloodGroup}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="religion"
+          placeholder="Religion"
+          value={formData.religion}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="cast"
+          placeholder="Cast"
+          value={formData.cast}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+
         <select
           name="class"
           value={formData.class}
@@ -133,52 +215,17 @@ const UpdateStudent = () => {
           ))}
         </select>
 
-        <h3 className="font-medium">Address</h3>
-        <input
-          type="text"
-          name="address.street"
-          placeholder="Street"
-          value={formData.address.street}
+        <select
+          name="orphan"
+          value={formData.orphan}
           onChange={handleChange}
           className="border p-2 rounded"
           required
-        />
-        <input
-          type="text"
-          name="address.city"
-          placeholder="City"
-          value={formData.address.city}
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
-        <input
-          type="text"
-          name="address.state"
-          placeholder="State"
-          value={formData.address.state}
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
-        <input
-          type="text"
-          name="address.postalCode"
-          placeholder="Postal Code"
-          value={formData.address.postalCode}
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
-        <input
-          type="text"
-          name="address.country"
-          placeholder="Country"
-          value={formData.address.country}
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
+        >
+          <option value="">Orphan Status</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
 
         <button
           type="submit"
