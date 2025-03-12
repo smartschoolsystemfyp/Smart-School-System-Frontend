@@ -90,7 +90,7 @@ const Student = () => {
                 "Name",
                 "Roll No.",
                 "Father Name",
-                "MotherName",
+                "Mother Name",
                 "Dob",
                 "Email",
                 "Phone Number",

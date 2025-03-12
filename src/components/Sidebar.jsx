@@ -120,7 +120,7 @@ const Sidebar = () => {
                 ) : (
                   <Link
                     to={item.path}
-                    className={`text-[0.83rem] p-2 rounded hover:bg-white hover:text-gray-800 flex items-center transition-all duration-300 ${
+                    className={`text-[0.88rem] p-2 rounded hover:bg-white hover:text-gray-800 flex items-center transition-all duration-300 ${
                       location.pathname === item.path
                         ? "border-l-[6px] border-white"
                         : ""
