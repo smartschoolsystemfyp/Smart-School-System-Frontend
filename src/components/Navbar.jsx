@@ -6,6 +6,7 @@ import { logoutTeacher } from "../services/authentication.service";
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const teacher = useSelector((state) => state.authentication.teacher);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -34,7 +35,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between px-8 sm:justify-around mx-auto p-4">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between px-10 mx-auto p-4">
         <Link
           to="/teacher"
           className="flex items-center space-x-3 rtl:space-x-reverse"
@@ -79,7 +80,7 @@ const Navbar = () => {
           } w-full md:block md:w-auto`}
           id="navbar-default"
         >
-          <ul className="text-sm flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <ul className="text-sm flex justify-center items-center flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <Link
                 to="/teacher"
@@ -111,6 +112,15 @@ const Navbar = () => {
                 Logout
               </button>
             </li>
+
+
+        <div className="ml-auto hidden sm:flex items-center gap-4">
+          <div className="w-[40px] h-[40px] rounded-full bg-gray-400"></div>
+          <div className="text-gray-200 hidden sm:block">
+            <p className="text-sm font-semibold">{teacher?.name}</p>
+            <p className="text-xs">{teacher?.email}</p>
+          </div>
+        </div>
           </ul>
         </div>
       </div>
