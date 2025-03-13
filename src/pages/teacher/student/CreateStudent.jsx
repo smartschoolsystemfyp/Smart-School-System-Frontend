@@ -1,28 +1,31 @@
 import React, { useState } from "react";
+import { createStudent } from "../../../services/student.service";
 import { useDispatch, useSelector } from "react-redux";
-import { createStaff } from "../../../services/staff.service";
+import Loader from "../../../components/Loader";
 
-const CreateStaff = () => {
+const CreateStudent = () => {
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.staff);
+  const { loading } = useSelector((state) => state.student);
+  const { classes, loading: classLoading } = useSelector(
+    (state) => state.classes
+  );
 
   const [formData, setFormData] = useState({
     name: "",
+    rollNumber: "",
     fatherName: "",
+    motherName: "",
     dob: "",
     email: "",
     phoneNumber: "",
-    cnicNumber: "",
+    bFormNumber: "",
     address: "",
-    dateOfJoining: "",
-    dateOfSupernation: "",
-    designation: "",
-    bankName: "",
-    bankBranchName: "",
-    ibanNumber: "",
-    accountNumber: "",
-    role: "",
-    password: "",
+    admissionDate: "",
+    bloodGroup: "",
+    religion: "",
+    cast: "",
+    classId: "",
+    orphan: "",
   });
 
   const handleChange = (e) => {
@@ -32,36 +35,38 @@ const CreateStaff = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createStaff(formData))
+    dispatch(createStudent(formData))
       .unwrap()
       .then(() =>
         setFormData({
           name: "",
+          rollNumber: "",
           fatherName: "",
+          motherName: "",
           dob: "",
           email: "",
           phoneNumber: "",
-          cnicNumber: "",
+          bFormNumber: "",
           address: "",
-          dateOfJoining: "",
-          dateOfSupernation: "",
-          designation: "",
-          bankName: "",
-          bankBranchName: "",
-          ibanNumber: "",
-          accountNumber: "",
-          role: "",
-          password: "",
+          admissionDate: "",
+          bloodGroup: "",
+          religion: "",
+          cast: "",
+          classId: "",
+          orphan: "",
         })
       )
       .catch((error) => {
-        console.error("Error creating staff:", error);
+        console.error("Error creating student:", error);
       });
   };
 
+  
+
   return (
     <section className="p-4 max-w-lg mx-auto bg-white shadow-md rounded-md my-9">
-      <h2 className="text-xl font-semibold mb-4">Create Staff</h2>
+      {classLoading && <Loader />}
+      <h2 className="text-xl font-semibold mb-4">Create Student</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
@@ -74,9 +79,27 @@ const CreateStaff = () => {
         />
         <input
           type="text"
+          name="rollNumber"
+          placeholder="Roll Number"
+          value={formData.rollNumber}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
           name="fatherName"
-          placeholder="Father's Name"
+          placeholder="Father Name"
           value={formData.fatherName}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="motherName"
+          placeholder="Mother Name"
+          value={formData.motherName}
           onChange={handleChange}
           className="border p-2 rounded"
           required
@@ -84,7 +107,6 @@ const CreateStaff = () => {
         <input
           type="date"
           name="dob"
-          placeholder="Date of Birth"
           value={formData.dob}
           onChange={handleChange}
           className="border p-2 rounded"
@@ -110,9 +132,9 @@ const CreateStaff = () => {
         />
         <input
           type="text"
-          name="cnicNumber"
-          placeholder="CNIC Number"
-          value={formData.cnicNumber}
+          name="bFormNumber"
+          placeholder="B-Form Number"
+          value={formData.bFormNumber}
           onChange={handleChange}
           className="border p-2 rounded"
           required
@@ -128,92 +150,64 @@ const CreateStaff = () => {
         />
         <input
           type="date"
-          name="dateOfJoining"
-          placeholder="Date of Joining"
-          value={formData.dateOfJoining}
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
-        <input
-          type="date"
-          name="dateOfSupernation"
-          placeholder="Date of Supernation"
-          value={formData.dateOfSupernation}
+          name="admissionDate"
+          value={formData.admissionDate}
           onChange={handleChange}
           className="border p-2 rounded"
           required
         />
         <input
           type="text"
-          name="designation"
-          placeholder="Designation"
-          value={formData.designation}
+          name="bloodGroup"
+          placeholder="Blood Group"
+          value={formData.bloodGroup}
           onChange={handleChange}
           className="border p-2 rounded"
           required
         />
         <input
           type="text"
-          name="bankName"
-          placeholder="Bank Name"
-          value={formData.bankName}
+          name="religion"
+          placeholder="Religion"
+          value={formData.religion}
           onChange={handleChange}
           className="border p-2 rounded"
           required
         />
         <input
           type="text"
-          name="bankBranchName"
-          placeholder="Bank Branch Name"
-          value={formData.bankBranchName}
+          name="cast"
+          placeholder="Cast"
+          value={formData.cast}
           onChange={handleChange}
           className="border p-2 rounded"
           required
         />
-        <input
-          type="text"
-          name="ibanNumber"
-          placeholder="IBAN Number"
-          value={formData.ibanNumber}
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
-        <input
-          type="text"
-          name="accountNumber"
-          placeholder="Account Number"
-          value={formData.accountNumber}
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
-
         <select
-          name="role"
-          value={formData.role}
+          name="classId"
+          value={formData.classId}
           onChange={handleChange}
           className="border p-2 rounded"
           required
         >
-          <option value="">Select Role</option>
-          <option value="Teacher">Teaching</option>
-          <option value="Non-Teaching">Non-Teaching</option>
+          <option value="">Select Class</option>
+          {classes.map((cl) => (
+            <option key={cl._id} value={cl._id}>
+              {cl.className}
+            </option>
+          ))}
         </select>
-
-        {formData.role === "Teacher" && (
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            className="border p-2 rounded"
-            required
-          />
-        )}
-
+        <select
+          name="orphan"
+          value={formData.orphan}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        >
+          <option value="">Orphan Status</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
         <button
           type="submit"
           className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
@@ -225,4 +219,4 @@ const CreateStaff = () => {
   );
 };
 
-export default CreateStaff;
+export default CreateStudent;

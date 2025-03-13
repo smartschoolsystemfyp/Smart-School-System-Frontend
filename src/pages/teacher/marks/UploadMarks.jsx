@@ -26,7 +26,6 @@ const UploadMarks = () => {
   }, [selectedClass]);
 
   const handleMarksChange = (student, subject, field, value) => {
-    // console.log("first", student, subject);
     setMarksData((prevData) => {
       const updatedData = [...prevData];
       const existingEntry = updatedData.find(
@@ -55,7 +54,7 @@ const UploadMarks = () => {
       })),
     };
     dispatch(bulkUploadMarks(formattedData));
-    navigate("/teacher/dashboard");
+    navigate("/teacher");
   };
 
   return (

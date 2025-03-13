@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import useGetToken from "./hooks";
 import { getAllClasses } from "./services/class.service";
 import Loader from "./components/Loader";
-import Marks from "./pages/admin/marks/Marks";
 
 const AdminLogin = lazy(() => import("./pages/auth/AdminLogin"));
 const AdminRegister = lazy(() => import("./pages/auth/AdminRegister"));
@@ -13,7 +12,6 @@ const TeacherDashboard = lazy(() =>
   import("./pages/teacher/dashboard/Dashboard")
 );
 const Navbar = lazy(() => import("./components/Navbar"));
-const AdminNavbar = lazy(() => import("./components/AdminNavbar"));
 const Sidebar = lazy(() => import("./components/Sidebar"));
 const Student = lazy(() => import("./pages/admin/student/Student"));
 const CreateStudent = lazy(() => import("./pages/admin/student/CreateStudent"));
@@ -35,6 +33,10 @@ const Class = lazy(() => import("./pages/admin/class/Class"));
 const CreateClass = lazy(() => import("./pages/admin/class/CreateClass"));
 const UpdateClass = lazy(() => import("./pages/admin/class/UpdateClass"));
 const CreateStaff = lazy(() => import("./pages/admin/staff/CreateStaff"));
+const Marks = lazy(() => import("./pages/admin/marks/Marks"));
+const UpdateStaff = lazy(() => import("./pages/admin/staff/UpdateStaff"));
+const TStudent = lazy(() => import("./pages/teacher/student/Student"));
+const TCreateStudent = lazy(() => import("./pages/teacher/student/CreateStudent"));
 
 const App = () => {
   const token = useGetToken();
@@ -80,6 +82,7 @@ const AdminRoutes = () => {
               <Route path="attendance/mark" element={<AdminAttendance />} />
               <Route path="staffs" element={<Staff />} />
               <Route path="staff/create" element={<CreateStaff />} />
+              <Route path="staff/:id" element={<UpdateStaff />} />
               <Route path="students" element={<Student />} />
               <Route path="student/create" element={<CreateStudent />} />
               <Route path="student/:id" element={<UpdateStudent />} />
@@ -112,6 +115,8 @@ const TeacherRoutes = () => {
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="" element={<TeacherDashboard />} />
+          <Route path="students" element={<TStudent />} />
+          <Route path="student/create" element={<TCreateStudent />} />
           <Route path="fees" element={<Fees />} />
           <Route path="fee/mark" element={<MarkFeePaid />} />
           <Route path="marks" element={<UploadMarks />} />

@@ -5,34 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Fees = () => {
   const dispatch = useDispatch();
-
-  // const fees = [
-  //   {
-  //     _id: "6798dcc292a037c3989dd619",
-  //     student: {
-  //       _id: "6798b918494ec0b098dea2aa",
-  //       name: "Adeel Tension",
-  //       class: {
-  //         _id: "6798b64042cd1a375bf8e008",
-  //         className: "Masters",
-  //       },
-  //     },
-  //     month: "2025-01-01",
-  //     isSubmitted: true,
-  //     markedBy: {
-  //       _id: "6798b4560f3d8aeb03cc47a3",
-  //       name: "Aneeb",
-  //     },
-  //     __v: 0,
-  //   },
-  // ];
-
   const { fees } = useSelector((state) => state.fee);
 
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredFees = fees.filter((fee) =>
-    fee.student.name.toLowerCase().includes(searchTerm.toLowerCase())
+    fee.student?.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   function handleDelete(id) {}

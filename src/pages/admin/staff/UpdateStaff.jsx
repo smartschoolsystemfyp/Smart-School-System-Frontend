@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createStaff } from "../../../services/staff.service";
+import { getStaffById, updateStaff } from "../../../services/staff.service";
+import { useNavigate, useParams } from "react-router-dom";
 
-const CreateStaff = () => {
+const UpdateStaff = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.staff);
+  const { loading, staff } = useSelector((state) => state.staff);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -22,7 +25,6 @@ const CreateStaff = () => {
     ibanNumber: "",
     accountNumber: "",
     role: "",
-    password: "",
   });
 
   const handleChange = (e) => {
@@ -32,36 +34,47 @@ const CreateStaff = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createStaff(formData))
+    dispatch(updateStaff({ _id: id, staffData: formData }))
       .unwrap()
-      .then(() =>
-        setFormData({
-          name: "",
-          fatherName: "",
-          dob: "",
-          email: "",
-          phoneNumber: "",
-          cnicNumber: "",
-          address: "",
-          dateOfJoining: "",
-          dateOfSupernation: "",
-          designation: "",
-          bankName: "",
-          bankBranchName: "",
-          ibanNumber: "",
-          accountNumber: "",
-          role: "",
-          password: "",
-        })
-      )
+      .then(() => navigate("/admin/staffs"))
       .catch((error) => {
         console.error("Error creating staff:", error);
       });
   };
 
+  useEffect(() => {
+    if (staff) {
+      setFormData({
+        name: staff.name || "",
+        fatherName: staff.fatherName || "",
+        dob: staff.dob ? staff.dob.split("T")[0] : "",
+        email: staff.email || "",
+        phoneNumber: staff.phoneNumber || "",
+        cnicNumber: staff.cnicNumber || "",
+        address: staff.address || "",
+        dateOfJoining: staff.dateOfJoining
+          ? staff.dateOfJoining.split("T")[0]
+          : "" || "",
+        dateOfSupernation: staff.dateOfSupernation
+          ? staff.dateOfSupernation.split("T")[0]
+          : "" || "",
+        designation: staff.designation || "",
+        bankName: staff.bankName || "",
+        bankBranchName: staff.bankBranchName || "",
+        ibanNumber: staff.ibanNumber || "",
+        accountNumber: staff.accountNumber || "",
+        role: staff.role || "",
+      });
+    }
+  }, [staff]);
+
+  useEffect(() => {
+    dispatch(getStaffById(id));
+  }, [id]);
+
   return (
     <section className="p-4 max-w-lg mx-auto bg-white shadow-md rounded-md my-9">
-      <h2 className="text-xl font-semibold mb-4">Create Staff</h2>
+      <h2 className="text-xl font-semibold mb-4">Update Staff</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
@@ -202,18 +215,6 @@ const CreateStaff = () => {
           <option value="Non-Teaching">Non-Teaching</option>
         </select>
 
-        {formData.role === "Teacher" && (
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            className="border p-2 rounded"
-            required
-          />
-        )}
-
         <button
           type="submit"
           className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
@@ -225,4 +226,4 @@ const CreateStaff = () => {
   );
 };
 
-export default CreateStaff;
+export default UpdateStaff;

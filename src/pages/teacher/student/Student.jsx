@@ -1,50 +1,62 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
-import { deleteStaff, getAllStaff } from "../../../services/staff.service";
+import {
+  deleteStudent,
+  getAllStudents,
+} from "../../../services/student.service";
 import Loader from "../../../components/Loader";
 
 const Student = () => {
   const dispatch = useDispatch();
 
-  const { staffs, loading } = useSelector((state) => state.staff);
+  const { students, loading } = useSelector((state) => state.student);
+  const [selectedClass, setSelectedClass] = useState("");
+  const { classes, loading: classLoading } = useSelector(
+    (state) => state.classes
+  );
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedRole, setSelectedRole] = useState("");
 
-  const filteredStaffs = staffs.filter((staff) =>
-    staff.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const studentsClasses = classes.map((item) => item._id);
+
+  const filteredStudents = students.filter(
+    (student) =>
+      student.class._id.includes(studentsClasses) &&
+      student.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  
+
 
   function handleDelete(id) {
     if (window.confirm("Are you sure you want to delete?")) {
-      dispatch(deleteStaff(id));
+      dispatch(deleteStudent(id));
     }
   }
 
   useEffect(() => {
-    dispatch(getAllStaff(selectedRole));
-  }, [selectedRole]);
+    dispatch(getAllStudents(selectedClass));
+  }, [selectedClass]);
 
   return (
     <section className="p-3 sm:p-4 rounded-lg w-full h-auto mt-[10px] sm:px-8">
-      {loading && <Loader />}
+      {(loading || classLoading) && <Loader />}
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-0 justify-between px-2 py-4">
         <div className="flex justify-between sm:justify-center items-center gap-4 text-xl sm:text-[1.4rem] font-semibold">
           <div>
             <i className="fas fa-user-graduate mr-2 text-blue-500"></i>
-            Staffs
+            Students
           </div>
-          <Link to={"/admin/staff/create"}>
+          <Link to={"/teacher/student/create"}>
             <div className="text-xs font-semibold pt-1 flex items-center text-green-500 hover:text-green-400">
-              <p>Create staff</p>
+              <p>Create student</p>
             </div>
           </Link>
         </div>
 
         <input
           type="search"
-          placeholder="Search staff by name"
+          placeholder="Search student by name"
           className="border border-gray-400 rounded-md p-2 text-sm"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -54,28 +66,25 @@ const Student = () => {
       <div className="my-3 flex gap-2">
         <button
           className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
-            selectedRole === "" ? "border-blue-500" : ""
+            selectedClass === "" ? "border-blue-500" : ""
           }`}
-          onClick={() => setSelectedRole("")}
+          onClick={() => setSelectedClass("")}
         >
           All
         </button>
-        <button
-          className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
-            selectedRole === "teacher" ? "border-blue-500" : ""
-          }`}
-          onClick={() => setSelectedRole("teacher")}
-        >
-          Teachers
-        </button>
-        <button
-          className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
-            selectedRole === "non-teaching" ? "border-blue-500" : ""
-          }`}
-          onClick={() => setSelectedRole("non-teaching")}
-        >
-          Non Teaching
-        </button>
+        {classes.map((cls) => (
+          <>
+            <button
+              key={cls._id}
+              className={`text-sm border p-2 w-[180px] text-center rounded-2xl cursor-pointer ${
+                selectedClass === cls._id ? "border-blue-500" : ""
+              }`}
+              onClick={() => setSelectedClass(cls._id)}
+            >
+              {cls.className}
+            </button>
+          </>
+        ))}
       </div>
 
       <div id="overflow" className="overflow-x-auto ">
@@ -85,20 +94,20 @@ const Student = () => {
               {[
                 "SR#",
                 "Name",
+                "Roll No.",
                 "Father Name",
+                "Mother Name",
                 "Dob",
                 "Email",
                 "Phone Number",
-                "CNIC",
+                "B -Form",
                 "Address",
-                "Date Of Joining",
-                "Date Of Supernation",
-                "Designation",
-                "Bank Name",
-                "Bank Branch Name",
-                "IBAN",
-                "Account Number",
-                "Role",
+                "Admission Date",
+                "Blood Group",
+                "Religion",
+                "Cast",
+                "Class",
+                "Orphan",
                 "Att %",
                 "Actions",
               ].map((header) => (
@@ -113,71 +122,70 @@ const Student = () => {
           </thead>
 
           <tbody>
-            {filteredStaffs.length > 0 &&
-              filteredStaffs.map((staff, index) => (
+            {filteredStudents.length > 0 &&
+              filteredStudents.map((student, index) => (
                 <tr
-                  key={staff._id}
+                  key={student._id}
                   className="odd:bg-gray-200 hover:bg-gray-300"
                 >
                   <td className="py-3 px-4 border-b border-secondary">
                     {index + 1}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {staff.name}
+                    {student.name}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {staff.fatherName}
+                    {student.rollNumber}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {new Date(staff.dob).toISOString().split("T")[0]}
+                    {student.fatherName}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {staff.email}
+                    {student.motherName}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {staff.phoneNumber}
+                    {new Date(student.dob).toISOString().split("T")[0]}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {staff.cnicNumber}
+                    {student.email}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {staff.address}
+                    {student.phoneNumber}
+                  </td>
+                  <td className="py-3 px-4border-b border-secondary">
+                    {student.bFormNumber}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {new Date(staff.dateOfJoining).toISOString().split("T")[0]}
+                    {student.address}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
                     {
-                      new Date(staff.dateOfSupernation)
+                      new Date(student.admissionDate)
                         .toISOString()
                         .split("T")[0]
                     }
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {staff.designation}
+                    {student.bloodGroup}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {staff.bankName}
+                    {student.religion}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {staff.bankBranchName}
+                    {student.cast}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {staff.ibanNumber}
+                    {student.class?.className || "Not Assigned"}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {staff.accountNumber}
+                    {student.orphan}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {staff.role}
-                  </td>
-
-                  <td className="py-3 px-4 border-b border-secondary">
-                    {staff?.attendancePercentage || "Not Yet"} %
+                    {student?.attendancePercentage || "Not Yet"} %
                   </td>
 
                   <td className="py-3 pl-8 border-b border-secondary flex items-center space-x-2">
-                    <Link to={`/admin/staff/${staff._id}`}>
+                    <Link to={`/admin/student/${student._id}`}>
                       <button
                         className="text-green-500 hover:text-green-400"
                         title="Edit"
@@ -187,7 +195,7 @@ const Student = () => {
                     </Link>
 
                     <button
-                      onClick={() => handleDelete(staff._id)}
+                      onClick={() => handleDelete(student._id)}
                       className="text-red-500 hover:text-red-400"
                       title="Delete"
                     >
@@ -199,9 +207,9 @@ const Student = () => {
           </tbody>
         </table>
 
-        {filteredStaffs.length === 0 && (
+        {filteredStudents.length === 0 && (
           <div className="h-[50vh] flex justify-center items-center text-sm">
-            No Staff Found
+            No Student Found
           </div>
         )}
       </div>

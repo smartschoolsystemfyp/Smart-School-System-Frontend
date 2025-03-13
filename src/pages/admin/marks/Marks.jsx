@@ -21,7 +21,7 @@ const Marks = () => {
 
   const filteredMarks = marks.filter(
     (mark) =>
-      mark.student.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      mark.student?.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (selectedExamType ? mark.examType === selectedExamType : true)
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,6 +35,7 @@ const Marks = () => {
   useEffect(() => {
     dispatch(getMarks({ selectedSubject, selectedExamType, selectedClass }));
   }, [selectedExamType, selectedSubject, selectedClass]);
+
 
   return (
     <section className="p-3 sm:p-4 rounded-lg w-full h-auto mt-[10px] sm:px-8">
@@ -117,7 +118,7 @@ const Marks = () => {
               {[
                 "SR#",
                 "Student Name",
-                "Email",
+                "Roll No",
                 "Subject",
                 "Class",
                 "Obtained",
@@ -145,10 +146,10 @@ const Marks = () => {
                     {index + 1}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {mark.student.name}
+                    {mark.student?.name}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {mark.student.email}
+                    {mark.student.rollNumber}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
                     {mark.subject.subjectName}
