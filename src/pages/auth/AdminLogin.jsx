@@ -56,7 +56,7 @@ const AdminLogin = () => {
                 name="auth"
                 value={formData.auth}
                 onChange={handleChange}
-                className="w-full p-2.5 pl-10 text-sm text-center border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2.5 pl-10 text-sm text-center border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               >
                 <option value="">__Select Authority__</option>
