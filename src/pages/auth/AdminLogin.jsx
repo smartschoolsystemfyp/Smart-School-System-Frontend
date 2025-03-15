@@ -39,7 +39,7 @@ const AdminLogin = () => {
       id="bg"
       className="min-h-screen flex justify-center items-center bg-gray-100"
     >
-      <div className="w-[95%] sm:max-w-md bg-white p-8 rounded-lg shadow-lg">
+      <div className="w-[95%] sm:max-w-md bg-white p-8 rounded-2xl shadow-lg">
         <h2 className="text-center text-xl font-extrabold text-gray-700 pb-6 flex items-center justify-center">
           <i className="fas fa-school mr-2 text-blue-600"></i>
           School Management
