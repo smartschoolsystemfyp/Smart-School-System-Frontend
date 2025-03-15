@@ -112,7 +112,7 @@ const AdminLogin = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-gray-500 rounded-3xl"
+                className="absolute right-3 top-3 text-gray-500"
               >
                 <i
                   className={showPassword ? "fas fa-eye-slash" : "fas fa-eye"}
@@ -124,7 +124,7 @@ const AdminLogin = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-blue-600 text-white p-3 rounded-3xl font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             {loading ? (
               <i className="fas fa-spinner fa-spin text-xs"></i>
