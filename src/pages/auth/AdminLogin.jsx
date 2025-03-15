@@ -84,7 +84,7 @@ const AdminLogin = () => {
                 onChange={handleChange}
                 required
                 placeholder="Enter your email"
-                className="w-full p-2.5 pl-10 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2.5 pl-10 text-sm border border-gray-300 rounded-3xl focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -107,12 +107,12 @@ const AdminLogin = () => {
                 onChange={handleChange}
                 required
                 placeholder="Enter your password"
-                className="w-full p-2.5 pl-10 pr-10 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2.5 pl-10 pr-10 text-sm border border-gray-300 rounded-3xl focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-gray-500"
+                className="absolute right-3 top-3 text-gray-500 rounded-3xl"
               >
                 <i
                   className={showPassword ? "fas fa-eye-slash" : "fas fa-eye"}
