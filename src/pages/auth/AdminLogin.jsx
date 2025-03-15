@@ -43,6 +43,8 @@ const AdminLogin = () => {
         <h2 className="text-center text-xl font-extrabold text-gray-700 pb-6 flex items-center justify-center">
           <i className="fas fa-school mr-2 text-blue-600"></i>
           Smart Sch0ol System
+          <br/>
+          (GHSS MANGA MANDI)
         </h2>
         <form onSubmit={handleSubmit}>
           {/* Authority Selection */}
