@@ -42,7 +42,7 @@ const AdminLogin = () => {
       <div className="w-[95%] sm:max-w-md bg-white p-8 rounded-3xl shadow-lg">
         <h2 className="text-center text-xl font-extrabold text-gray-700 pb-6 flex items-center justify-center">
           <i className="fas fa-school mr-2 text-blue-600"></i>
-          Smart Schhol System
+          Smart Sch0ol System
         </h2>
         <form onSubmit={handleSubmit}>
           {/* Authority Selection */}
