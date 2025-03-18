@@ -40,12 +40,11 @@ const AdminLogin = () => {
       className="min-h-screen flex justify-center items-center bg-gray-100"
     >
       <div className="w-[95%] sm:max-w-md bg-white p-8 rounded-3xl shadow-lg">
-        <h2 className="text-center text-xl font-extrabold text-gray-700 pb-6 flex items-center justify-center">
+        <h1 className="text-center text-xl font-extrabold text-gray-700 pb-6 flex items-center justify-center">
           <i className="fas fa-school mr-2 text-blue-600"></i>
-          Smart Sch0ol System
-          <br/>
+       
           (GHSS MANGA MANDI)
-        </h2>
+        </h1>
         <form onSubmit={handleSubmit}>
           {/* Authority Selection */}
           <div className="mb-4">
