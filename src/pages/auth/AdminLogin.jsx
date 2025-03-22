@@ -40,7 +40,7 @@ const AdminLogin = () => {
       className="min-h-screen flex justify-center items-center bg-gray-100"
     >
       <div className="w-[95%] sm:max-w-md bg-white pb-8 px-8 pt-2 rounded-3xl shadow-lg">
-        <div className="text-xl font-extrabold text-gray-700 flex sm:flex-row flex-col items-center justify-center">
+        <div className="text-xl pb-3 sm:pb-0 font-extrabold text-gray-700 flex sm:flex-row flex-col items-center justify-center">
           <img className="w-24" src="/school.png" alt="school_logo" />
           GHSS MANGA MANDI
         </div>
