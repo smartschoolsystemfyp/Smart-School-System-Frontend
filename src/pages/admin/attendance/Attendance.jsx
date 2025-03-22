@@ -52,7 +52,7 @@ const Attendance = () => {
     dispatch(markStaffAttendance(attendanceRecords))
       .unwrap()
       .then(() => {
-        navigate("/dms/");
+        navigate("/admin");
         setHide(true);
       })
       .catch((error) => {
