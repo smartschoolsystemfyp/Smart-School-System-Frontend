@@ -20,6 +20,7 @@ const Attendance = () => {
     new Date().toISOString().split("T")[0]
   );
   const [attendance, setAttendance] = useState({});
+  const [hide, setHide] = useState(true);
 
   const handleClassChange = (e) => {
     setSelectedAuth(e.target.value);
@@ -50,7 +51,10 @@ const Attendance = () => {
     );
     dispatch(markStaffAttendance(attendanceRecords))
       .unwrap()
-      .then(() => navigate("/admin"))
+      .then(() => {
+        navigate("/dms/");
+        setHide(true);
+      })
       .catch((error) => {
         console.error("Error updating attendance:", error);
       });
@@ -59,6 +63,7 @@ const Attendance = () => {
   function handleFromSubmit(e) {
     e.preventDefault();
     dispatch(getAllStaff(selectedAuth));
+    setHide(false);
   }
 
   return (
@@ -66,7 +71,7 @@ const Attendance = () => {
       {loading && <Loader />}
       <h2 className="text-xl font-semibold mb-4">Mark Attendance</h2>
 
-      {staffs.length === 0 && (
+      {hide && (
         <div className="h-[70vh] flex justify-center items-center">
           <form
             onSubmit={handleFromSubmit}

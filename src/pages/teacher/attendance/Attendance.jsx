@@ -17,6 +17,7 @@ const Attendance = () => {
   );
 
   const [attendance, setAttendance] = useState({});
+  const [hide, setHide] = useState(true);
 
   const handleClassChange = (e) => {
     setSelectedClass(e.target.value);
@@ -47,7 +48,10 @@ const Attendance = () => {
     );
     dispatch(markStudentAttendance(attendanceRecords))
       .unwrap()
-      .then(() => navigate("/teacher/"))
+      .then(() => {
+        setHide(false);
+        navigate("/teacher/");
+      })
       .catch((error) => {
         console.error("Error updating attendance:", error);
       });
@@ -55,15 +59,15 @@ const Attendance = () => {
 
   function handleFromSubmit(e) {
     e.preventDefault();
-    console.log("first")
     dispatch(getAllStudents(selectedClass));
+    setHide(false);
   }
 
   return (
     <section className="p-6 max-w-[95%] mx-auto rounded-xl">
       <h2 className="text-xl font-semibold mb-4">Mark Attendance</h2>
 
-      {students.length === 0 && (
+      {hide && (
         <div className="h-[70vh] flex justify-center items-center">
           <form
             onSubmit={handleFromSubmit}
