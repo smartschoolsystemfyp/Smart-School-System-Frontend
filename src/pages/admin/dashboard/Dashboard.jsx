@@ -17,6 +17,7 @@ import {
   FaUserGraduate,
   FaChalkboardTeacher,
   FaBookOpen,
+  FaMoneyBillWave,
 } from "react-icons/fa";
 import { getInsights } from "../../../services/insight.service";
 
@@ -49,20 +50,26 @@ const Dashboard = () => {
     {
       title: "Total Students",
       value: insights?.totalStudents || 0,
-      bgColor: "bg-blue-500",
-      icon: <FaUserGraduate size={20} />,
+      bgColor: "bg-gradient-to-r from-blue-500 to-blue-700",
+      icon: <FaUserGraduate size={40} />,
     },
     {
       title: "Total Teachers",
       value: insights?.totalTeachers || 0,
-      bgColor: "bg-green-500",
-      icon: <FaChalkboardTeacher size={20} />,
+      bgColor: "bg-gradient-to-r from-green-500 to-green-700",
+      icon: <FaChalkboardTeacher size={40} />,
     },
     {
       title: "Total Non teaching",
       value: insights?.totalNonTeaching || 0,
-      bgColor: "bg-yellow-500",
-      icon: <FaBookOpen size={20} />,
+      bgColor: "bg-gradient-to-r from-yellow-500 to-yellow-700",
+      icon: <FaBookOpen size={40} />,
+    },
+    {
+      title: "Total Expenses",
+      value: insights?.totalExpenses || 0,
+      bgColor: "bg-gradient-to-r from-red-500 to-red-700",
+      icon: <FaMoneyBillWave size={40} />,
     },
   ];
 
@@ -92,23 +99,25 @@ const Dashboard = () => {
   };
 
   return (
-    <section className="p-3 space-y-6">
+    <section className="p-3 space-y-4 bg-slate-50">
       {/* Reports Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         {reports.map((report, index) => (
           <div
             key={index}
-            className={`flex flex-col items-center justify-center h-32 ${report.bgColor} text-white rounded-lg shadow-lg p-6 space-y-2`}
+            className={`flex items-center justify-around h-32 ${report.bgColor} text-white rounded-lg shadow-lg p-6 space-y-2`}
           >
             <p>{report.icon}</p>
-            <h2 className="text-lg font-semibold">{report.title}</h2>
-            <p className="text-2xl font-bold">{report.value}</p>
+            <div className="flex flex-col justify-center items-center">
+              <h2 className="text-xl font-extrabold pb-2">{report.title}</h2>
+              <p className="text-xl font-bold">{report.value}</p>
+            </div>
           </div>
         ))}
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         {/* Doughnut Chart - Subject Enrollment */}
         <div className="bg-white border border-gray-300 rounded-lg p-6 flex flex-col items-center">
           <h3 className="text-lg font-semibold text-center mb-4">

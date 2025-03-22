@@ -40,11 +40,10 @@ const AdminLogin = () => {
       className="min-h-screen flex justify-center items-center bg-gray-100"
     >
       <div className="w-[95%] sm:max-w-md bg-white p-8 rounded-3xl shadow-lg">
-        <h2 className="text-center text-xl font-extrabold text-gray-700 pb-6 flex items-center justify-center">
-          <i className="fas fa-school mr-2 text-blue-600"></i>
-       
+        <div className="text-xl font-extrabold text-gray-700 flex sm:flex-row flex-col items-center justify-center">
+          <img className="w-24" src="/school.png" alt="school_logo" />
           GHSS MANGA MANDI
-        </h2>
+        </div>
         <form onSubmit={handleSubmit}>
           {/* Authority Selection */}
           <div className="mb-4">

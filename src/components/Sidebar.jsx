@@ -51,8 +51,8 @@ const Sidebar = () => {
   return (
     <>
       <div className="bg-[#212121] w-full h-[65px] fixed top-0 left-0 z-50 flex items-center px-5">
-        <h2 className="text-center text-lg font-semibold text-gray-300 hidden lg:block">
-          <i class="fas fa-school mr-2"></i>
+        <h2 className="hidden text-lg font-semibold text-gray-300 items-center gap-3  lg:flex">
+          <img className="w-14 mix-blend-color-dodge" src="/school.png" alt="school_logo" />
           School Management
         </h2>
 
