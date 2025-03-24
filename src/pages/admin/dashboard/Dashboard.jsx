@@ -57,13 +57,13 @@ const Dashboard = () => {
       title: "Total Teachers",
       value: insights?.totalTeachers || 0,
       bgColor: "bg-gradient-to-r from-green-500 to-green-700",
-      icon: <FaChalkboardTeacher size={40} />,
+      icon: <FaChalkboardTeacher size={60} />,
     },
     {
-      title: "Total Non teaching",
+      title: "Total Non_Teaching",
       value: insights?.totalNonTeaching || 0,
       bgColor: "bg-gradient-to-r from-yellow-500 to-yellow-700",
-      icon: <FaBookOpen size={40} />,
+      icon: <FaBookOpen size={60} />,
     },
     {
       title: "Total Expenses",
