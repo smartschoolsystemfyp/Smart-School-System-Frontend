@@ -41,7 +41,7 @@ const AdminLogin = () => {
     >
       <div className="w-[95%] sm:max-w-md bg-white pb-8 px-8 pt-2 rounded-3xl shadow-lg">
         <div className="text-xl pb-3 sm:pb-0 font-extrabold text-gray-700 flex sm:flex-row flex-col items-center justify-center">
-          <img className="w-27" src="/school.png" alt="school_logo" />
+          <img className="w-25" src="/school.png" alt="school_logo" />
           
         </div>
         <form onSubmit={handleSubmit}>
