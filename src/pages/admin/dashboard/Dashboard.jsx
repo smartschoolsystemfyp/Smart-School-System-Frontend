@@ -50,8 +50,8 @@ const Dashboard = () => {
     {
       title: "Total Students",
       value: insights?.totalStudents || 0,
-      bgColor: "bg-gradient-to-r from-yellow-500 to-blue-700",
-      icon: <FaUserGraduate size={40} />,
+      bgColor: "bg-gradient-to-r from-blue-500 to-blue-700",
+      icon: <FaUserGraduate size={60} />,
     },
     {
       title: "Total Teachers",
