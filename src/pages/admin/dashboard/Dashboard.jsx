@@ -69,7 +69,7 @@ const Dashboard = () => {
       title: "Total Expenses",
       value: insights?.totalExpenses || 0,
       bgColor: "bg-gradient-to-r from-red-500 to-red-700",
-      icon: <FaMoneyBillWave size={40} />,
+      icon: <FaMoneyBillWave size={60} />,
     },
   ];
 
