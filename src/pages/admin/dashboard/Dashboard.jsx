@@ -60,7 +60,7 @@ const Dashboard = () => {
       icon: <FaChalkboardTeacher size={60} />,
     },
     {
-      title: "Total Non_Teaching",
+      title: "Total Non-Teaching",
       value: insights?.totalNonTeaching || 0,
       bgColor: "bg-gradient-to-r from-yellow-500 to-yellow-700",
       icon: <FaBookOpen size={60} />,
