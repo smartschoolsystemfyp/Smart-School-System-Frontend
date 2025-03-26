@@ -20,7 +20,7 @@ const Dashboard = () => {
           <Link
             key={index}
             to={link.to}
-            className="flex-grow w-[97%] sm:w-[400px] h-[180px] rounded-4xl border border-gray-300 flex flex-col items-center justify-center text-center bg-white hover:bg-blue-100 hover:border-blue-500 hover:ring-2 hover:ring-blue-500 transition duration-300 ease-in-out"
+            className="flex-grow w-[97%] sm:w-[400px] h-[180px] rounded-1xl border border-gray-300 flex flex-col items-center justify-center text-center bg-white hover:bg-blue-100 hover:border-blue-500 hover:ring-2 hover:ring-blue-500 transition duration-300 ease-in-out"
           >
             <i className={`${link.icon} text-4xl text-green-500`}></i>
             <h3 className="mt-2 text-lg font-semibold text-blue-500">
