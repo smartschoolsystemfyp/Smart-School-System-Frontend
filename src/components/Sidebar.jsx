@@ -19,13 +19,16 @@ const menuItems = [
     icon: "fas fa-book-open",
   },
   { label: "Classes Management", path: "/admin/class", icon: "fas fa-school" },
-  { label: "Marks Management", path: "/admin/marks", icon: "fas fa-school" },
+  { label: "Marks Management", path: "/admin/marks", icon: "fas fa-clipboard-list" },
   {
     label: "Mark Attendance",
     path: "/admin/attendance/mark",
     icon: "fas fa-chalkboard-teacher",
   },
+  { label: "Funds Management", path: "/admin/funds", icon: "fas fa-coins" },
+  { label: "Document Management", path: "/admin/documents", icon: "fas fa-file-alt" },
   { section: "Analytics" },
+  { label: "Reports & Analytics", path: "/admin/report", icon: "fas fa-chart-line" },
   { label: "Settings", path: "/admin/settings", icon: "fas fa-cogs" },
   { label: "Logout", action: "logout", icon: "fas fa-sign-out-alt" },
 ];
@@ -50,11 +53,10 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="bg-[#212121] w-full h-[65px] fixed top-0 left-0 z-50 flex items-center px-5">
-        <h2 className="hidden text-lg font-semibold text-gray-300 items-center gap-3  lg:flex">
-          <img className="w-14 mix-blend-color-dodge" src="/school.png" alt="school_logo" />
-          School Management
-        </h2>
+      <div className="bg-gray-600 w-full h-[65px] fixed top-0 left-0 z-20 flex items-center px-5">
+        {/* <h2 className="hidden text-lg font-semibold text-gray-300 items-center justify-center lg:flex mt-16">
+          <img className="w-[200px]" src="/school.png" alt="school_logo" />
+        </h2> */}
 
         <div className="cursor-pointer lg:hidden" onClick={toggleSidebar}>
           <i className="fa fa-bars text-white text-lg"></i>
@@ -77,22 +79,22 @@ const Sidebar = () => {
       )}
 
       <motion.aside
-        className="w-[260px] text-white h-screen p-3 fixed top-0 z-50 lg:z-10 shadow-xl bg-[#212121] pt-10"
+        id="overflow"
+        className="w-[260px] text-white h-screen p-3 fixed top-0 z-50  shadow-xl bg-gray-600 overflow-auto"
         initial={{ x: -260 }}
         animate={{ x: isOpen ? 0 : -260 }}
         transition={{ type: "spring", stiffness: 100 }}
       >
-        <h2 className="text-center text-lg font-semibold text-gray-300 lg:hidden block">
-          <i class="fas fa-school mr-2"></i>
-          School Management
+        <h2 className="hidden text-lg font-semibold text-gray-300 items-center justify-center lg:flex">
+          <img className="w-[200px] z-50 relative" src="/school.png" alt="school_logo" />
         </h2>
 
-        <ul className="space-y-3 mt-10">
+        <ul className="space-y-3">
           {menuItems.map((item, index) =>
             item.section ? (
               <p
                 key={index}
-                className="text-xs text-gray-400 font-semibold uppercase"
+                className="text-xs text-gray-300 font-semibold uppercase"
               >
                 {item.section}
               </p>
