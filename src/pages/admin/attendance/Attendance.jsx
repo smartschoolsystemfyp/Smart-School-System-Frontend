@@ -24,14 +24,6 @@ const Attendance = () => {
 
   const handleClassChange = (e) => {
     setSelectedAuth(e.target.value);
-    setAttendance(
-      staffs
-        .filter((staff) => staff.classId === e.target.value)
-        .reduce((acc, staff) => {
-          acc[staff._id] = "Present";
-          return acc;
-        }, {})
-    );
   };
 
   const toggleAttendance = (staffId) => {
@@ -62,8 +54,17 @@ const Attendance = () => {
 
   function handleFromSubmit(e) {
     e.preventDefault();
-    dispatch(getAllStaff(selectedAuth));
-    setHide(false);
+    dispatch(getAllStaff(selectedAuth))
+      .unwrap()
+      .then((staffData) => {
+        // Initialize all staff members as "Present" by default
+        const defaultAttendance = staffData.reduce((acc, staff) => {
+          acc[staff._id] = "Present";
+          return acc;
+        }, {});
+        setAttendance(defaultAttendance);
+        setHide(false);
+      });
   }
 
   return (
@@ -137,7 +138,9 @@ const Attendance = () => {
                       className="inline-flex items-center cursor-pointer"
                       htmlFor={`toggle-${staff._id}`}
                     >
-                      <span className="mr-2 text-gray-700"></span>
+                      <span className="mr-2 text-gray-700">
+                        {attendance[staff._id] || "Present"}
+                      </span>
                       <input
                         type="checkbox"
                         id={`toggle-${staff._id}`}
@@ -145,7 +148,10 @@ const Attendance = () => {
                         checked={attendance[staff._id] === "Present"}
                         onChange={() => toggleAttendance(staff._id)}
                       />
-                      <span className="toggle-slider"></span>
+                      <div className="relative">
+                        <div className={`w-10 h-6 rounded-full ${attendance[staff._id] === "Present" ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                        <div className={`absolute w-4 h-4 rounded-full bg-white top-1 transition-transform ${attendance[staff._id] === "Present" ? 'transform translate-x-6' : 'transform translate-x-1'}`}></div>
+                      </div>
                     </label>
                   </td>
                 </tr>
