@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllStudents } from "../../../services/student.service";
-import {
-  markStaffAttendance,
-  markStudentAttendance,
-} from "../../../services/attendance.service";
+import { markStaffAttendance } from "../../../services/attendance.service";
 import { useNavigate } from "react-router-dom";
 import { getAllStaff } from "../../../services/staff.service";
 import Loader from "../../../components/Loader";
@@ -149,8 +145,20 @@ const Attendance = () => {
                         onChange={() => toggleAttendance(staff._id)}
                       />
                       <div className="relative">
-                        <div className={`w-10 h-6 rounded-full ${attendance[staff._id] === "Present" ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                        <div className={`absolute w-4 h-4 rounded-full bg-white top-1 transition-transform ${attendance[staff._id] === "Present" ? 'transform translate-x-6' : 'transform translate-x-1'}`}></div>
+                        <div
+                          className={`w-10 h-6 rounded-full ${
+                            attendance[staff._id] === "Present"
+                              ? "bg-green-500"
+                              : "bg-red-500"
+                          }`}
+                        ></div>
+                        <div
+                          className={`absolute w-4 h-4 rounded-full bg-white top-1 transition-transform ${
+                            attendance[staff._id] === "Present"
+                              ? "transform translate-x-6"
+                              : "transform translate-x-1"
+                          }`}
+                        ></div>
                       </div>
                     </label>
                   </td>

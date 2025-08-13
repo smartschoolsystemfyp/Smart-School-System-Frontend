@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  forgetPassword,
   login,
   logoutAdmin,
   logoutTeacher,
   registerAdmin,
   registerStaff,
+  resetPassword,
   updateAdminPassword,
   updateTeacherPassword,
 } from "../services/authentication.service";
@@ -35,8 +37,8 @@ const authenticationSlice = createSlice({
         state.error = action.payload;
       })
 
-       // Handling the registerAdmin action
-       .addCase(registerAdmin.pending, (state) => {
+      // Handling the registerAdmin action
+      .addCase(registerAdmin.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -118,6 +120,32 @@ const authenticationSlice = createSlice({
         localStorage.removeItem("token");
       })
       .addCase(logoutAdmin.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Handling the forgetPassword action
+      .addCase(forgetPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(forgetPassword.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(forgetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Handling the resetPassword action
+      .addCase(resetPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

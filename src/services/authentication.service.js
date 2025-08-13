@@ -22,6 +22,33 @@ export const login = createAsyncThunk(
   }
 );
 
+export const forgetPassword = createAsyncThunk(
+  "authntication/forgetPassword",
+  async (email, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.post(`/forget-password`, email);
+      console.log(data);
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error.response?.data.message);
+      return rejectWithValue(error.response?.data.message || error.message);
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  "authntication/resetPassword",
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.post(`/reset-password`, credentials);
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error.response?.data.message);
+      return rejectWithValue(error.response?.data.message || error.message);
+    }
+  }
+);
+
 export const registerStaff = createAsyncThunk(
   "authntication/registerStaff",
   async (staff, { rejectWithValue }) => {

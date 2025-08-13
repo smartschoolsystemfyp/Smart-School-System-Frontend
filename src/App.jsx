@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import useGetToken from "./hooks";
 import { getAllClasses } from "./services/class.service";
 import Loader from "./components/Loader";
+import ForgetPassword from "./pages/auth/ForgetPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
+import Confirmation from "./pages/auth/Confirmation";
 
 const AdminLogin = lazy(() => import("./pages/auth/AdminLogin"));
 const AdminRegister = lazy(() => import("./pages/auth/AdminRegister"));
@@ -36,7 +39,9 @@ const CreateStaff = lazy(() => import("./pages/admin/staff/CreateStaff"));
 const Marks = lazy(() => import("./pages/admin/marks/Marks"));
 const UpdateStaff = lazy(() => import("./pages/admin/staff/UpdateStaff"));
 const TStudent = lazy(() => import("./pages/teacher/student/Student"));
-const TCreateStudent = lazy(() => import("./pages/teacher/student/CreateStudent"));
+const TCreateStudent = lazy(() =>
+  import("./pages/teacher/student/CreateStudent")
+);
 
 const App = () => {
   const token = useGetToken();
@@ -47,6 +52,10 @@ const App = () => {
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<AdminLogin />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/forget-password-confirm" element={<Confirmation />} />
+
         <Route path="/admin/register" element={<AdminRegister />} />
         <Route
           path="/admin/*"

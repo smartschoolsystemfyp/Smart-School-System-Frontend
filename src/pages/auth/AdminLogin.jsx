@@ -139,7 +139,7 @@ const AdminLogin = () => {
           <p className="text-sm text-gray-600">
             Forget Password?
             <Link
-              to="/admin/forget-password"
+              to="forget-password"
               className="text-blue-600 hover:underline pl-1"
             >
               Click here

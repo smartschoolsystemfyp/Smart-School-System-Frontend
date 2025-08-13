@@ -87,21 +87,21 @@ const Student = () => {
             <tr className="bg-[#212121] text-gray-100 text-primary">
               {[
                 "SR#",
-                "Name",
                 "Roll No.",
+                "Name",
                 "Father Name",
-                "Mother Name",
-                "Dob",
-                "Email",
-                "Phone Number",
-                "B -Form",
-                "Address",
-                "Admission Date",
-                "Blood Group",
-                "Religion",
-                "Cast",
+                // "Mother Name",
+                // "Dob",
+                // "Email",
+                "Phone",
+                // "B -Form",
+                // "Address",
+                // "Admission Date",
+                // "Blood Group",
+                // "Religion",
+                // "Cast",
                 "Class",
-                "Orphan",
+                // "Orphan",
                 "Att %",
                 "Actions",
               ].map((header) => (
@@ -126,15 +126,15 @@ const Student = () => {
                     {index + 1}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {student.name}
+                    {student.rollNumber}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {student.rollNumber}
+                    {student.name}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
                     {student.fatherName}
                   </td>
-                  <td className="py-3 px-4 border-b border-secondary">
+                  {/* <td className="py-3 px-4 border-b border-secondary">
                     {student.motherName}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
@@ -142,11 +142,11 @@ const Student = () => {
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
                     {student.email}
-                  </td>
+                  </td> */}
                   <td className="py-3 px-4 border-b border-secondary">
                     {student.phoneNumber}
                   </td>
-                  <td className="py-3 px-4border-b border-secondary">
+                  {/* <td className="py-3 px-4border-b border-secondary">
                     {student.bFormNumber}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
@@ -167,13 +167,13 @@ const Student = () => {
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
                     {student.cast}
-                  </td>
+                  </td> */}
                   <td className="py-3 px-4 border-b border-secondary">
                     {student.class?.className || "Not Assigned"}
                   </td>
-                  <td className="py-3 px-4 border-b border-secondary">
+                  {/* <td className="py-3 px-4 border-b border-secondary">
                     {student.orphan}
-                  </td>
+                  </td> */}
                   <td className="py-3 px-4 border-b border-secondary">
                     {student?.attendancePercentage || "Not Yet"} %
                   </td>

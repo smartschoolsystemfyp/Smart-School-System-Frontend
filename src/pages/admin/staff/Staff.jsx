@@ -85,19 +85,19 @@ const Student = () => {
               {[
                 "SR#",
                 "Name",
-                "Father Name",
-                "Dob",
-                "Email",
-                "Phone Number",
+                // "Father Name",
+                // "Dob",
+                // "Email",
+                "Phone",
                 "CNIC",
-                "Address",
-                "Date Of Joining",
-                "Date Of Supernation",
+                // "Address",
+                // "Date Of Joining",
+                // "Date Of Supernation",
                 "Designation",
-                "Bank Name",
-                "Bank Branch Name",
-                "IBAN",
-                "Account Number",
+                // "Bank Name",
+                // "Bank Branch Name",
+                // "IBAN",
+                // "Account Number",
                 "Role",
                 "Att %",
                 "Actions",
@@ -125,7 +125,7 @@ const Student = () => {
                   <td className="py-3 px-4 border-b border-secondary">
                     {staff.name}
                   </td>
-                  <td className="py-3 px-4 border-b border-secondary">
+                  {/* <td className="py-3 px-4 border-b border-secondary">
                     {staff.fatherName}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
@@ -133,14 +133,14 @@ const Student = () => {
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
                     {staff.email}
-                  </td>
+                  </td> */}
                   <td className="py-3 px-4 border-b border-secondary">
                     {staff.phoneNumber}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
                     {staff.cnicNumber}
                   </td>
-                  <td className="py-3 px-4 border-b border-secondary">
+                  {/* <td className="py-3 px-4 border-b border-secondary">
                     {staff.address}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
@@ -152,22 +152,22 @@ const Student = () => {
                         .toISOString()
                         .split("T")[0]
                     }
-                  </td>
+                  </td> */}
                   <td className="py-3 px-4 border-b border-secondary">
                     {staff.designation}
                   </td>
-                  <td className="py-3 px-4 border-b border-secondary">
+                  {/* <td className="py-3 px-4 border-b border-secondary">
                     {staff.bankName}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
                     {staff.bankBranchName}
-                  </td>
-                  <td className="py-3 px-4 border-b border-secondary">
+                  </td> */}
+                  {/* <td className="py-3 px-4 border-b border-secondary">
                     {staff.ibanNumber}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
                     {staff.accountNumber}
-                  </td>
+                  </td> */}
                   <td className="py-3 px-4 border-b border-secondary">
                     {staff.role}
                   </td>
