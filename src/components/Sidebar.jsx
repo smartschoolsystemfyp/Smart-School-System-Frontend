@@ -28,7 +28,6 @@ const menuItems = [
   { label: "Funds Management", path: "/admin/funds", icon: "fas fa-coins" },
   { label: "Document Management", path: "/admin/documents", icon: "fas fa-file-alt" },
   { section: "Analytics" },
-  { label: "Reports & Analytics", path: "/admin/report", icon: "fas fa-chart-line" },
   { label: "Settings", path: "/admin/settings", icon: "fas fa-cogs" },
   { label: "Logout", action: "logout", icon: "fas fa-sign-out-alt" },
 ];

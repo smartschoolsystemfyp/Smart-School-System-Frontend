@@ -9,6 +9,7 @@ import subject from "../functions/subject.reducer";
 import classes from "../functions/class.reducer.js";
 import attendance from "../functions/attendance.reducer.js";
 import authentication from "../functions/authentication.reducer";
+import combine from "../functions/document&fund.reducre.js";
 
 const persistConfig = {
   key: "root",
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   student,
   staff,
   subject,
+  combine,
   classes,
   attendance,
   authentication,

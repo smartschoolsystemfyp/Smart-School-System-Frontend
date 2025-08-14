@@ -17,6 +17,7 @@ const Attendance = () => {
   );
   const [attendance, setAttendance] = useState({});
   const [hide, setHide] = useState(true);
+  const [formSubmitted, setFormSubmitted] = useState(false); // New state
 
   const handleClassChange = (e) => {
     setSelectedAuth(e.target.value);
@@ -42,6 +43,7 @@ const Attendance = () => {
       .then(() => {
         navigate("/admin");
         setHide(true);
+        setFormSubmitted(false); // Reset form submission state
       })
       .catch((error) => {
         console.error("Error updating attendance:", error);
@@ -53,12 +55,12 @@ const Attendance = () => {
     dispatch(getAllStaff(selectedAuth))
       .unwrap()
       .then((staffData) => {
-        // Initialize all staff members as "Present" by default
         const defaultAttendance = staffData.reduce((acc, staff) => {
           acc[staff._id] = "Present";
           return acc;
         }, {});
         setAttendance(defaultAttendance);
+        setFormSubmitted(true); // Set form as submitted
         setHide(false);
       });
   }
@@ -72,7 +74,7 @@ const Attendance = () => {
         <div className="h-[70vh] flex justify-center items-center">
           <form
             onSubmit={handleFromSubmit}
-            className="bg-white p-6 rounded-lg  w-full max-w-md"
+            className="bg-white p-6 rounded-lg w-full max-w-md"
           >
             <div className="mb-4">
               <label className="font-medium text-gray-600">
@@ -111,7 +113,7 @@ const Attendance = () => {
         </div>
       )}
 
-      {selectedAuth && staffs.length > 0 && (
+      {formSubmitted && staffs.length > 0 && (
         <div className="overflow-x-auto">
           <table className="min-w-full text-left border-collapse text-sm">
             <thead>
@@ -169,7 +171,7 @@ const Attendance = () => {
         </div>
       )}
 
-      {selectedAuth && staffs.length > 0 && (
+      {formSubmitted && staffs.length > 0 && (
         <div className="text-center mt-6">
           <button
             onClick={handleSubmit}

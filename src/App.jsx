@@ -1,12 +1,12 @@
-import React, { useEffect, Suspense, lazy } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import useGetToken from "./hooks";
-import { getAllClasses } from "./services/class.service";
 import Loader from "./components/Loader";
-import ForgetPassword from "./pages/auth/ForgetPassword";
-import ResetPassword from "./pages/auth/ResetPassword";
 import Confirmation from "./pages/auth/Confirmation";
+import ResetPassword from "./pages/auth/ResetPassword";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, Suspense, lazy } from "react";
+import ForgetPassword from "./pages/auth/ForgetPassword";
+import { getAllClasses } from "./services/class.service";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 const AdminLogin = lazy(() => import("./pages/auth/AdminLogin"));
 const AdminRegister = lazy(() => import("./pages/auth/AdminRegister"));
@@ -41,6 +41,16 @@ const UpdateStaff = lazy(() => import("./pages/admin/staff/UpdateStaff"));
 const TStudent = lazy(() => import("./pages/teacher/student/Student"));
 const TCreateStudent = lazy(() =>
   import("./pages/teacher/student/CreateStudent")
+);
+const Fund = lazy(() => import("./pages/admin/fund/Fund"));
+const CreateFund = lazy(() => import("./pages/admin/fund/CreateFund"));
+const UpdateFund = lazy(() => import("./pages/admin/fund/UpdateFund"));
+const Documet = lazy(() => import("./pages/admin/document/Documet"));
+const CreateDocument = lazy(() =>
+  import("./pages/admin/document/CreateDocument")
+);
+const UpdateDocument = lazy(() =>
+  import("./pages/admin/document/UpdateDocument")
 );
 
 const App = () => {
@@ -102,6 +112,12 @@ const AdminRoutes = () => {
               <Route path="subjects" element={<Subject />} />
               <Route path="subject/create" element={<CreateSubject />} />
               <Route path="subject/:id" element={<UpdateSubject />} />
+              <Route path="funds" element={<Fund />} />
+              <Route path="fund/create" element={<CreateFund />} />
+              <Route path="fund/:id" element={<UpdateFund />} />
+              <Route path="documents" element={<Documet />} />
+              <Route path="document/create" element={<CreateDocument />} />
+              <Route path="document/:id" element={<UpdateDocument />} />
               <Route path="settings" element={<AdminSetting />} />
             </Routes>
           </Suspense>

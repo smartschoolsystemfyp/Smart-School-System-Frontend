@@ -8,6 +8,7 @@ import {
   registerStaff,
   resetPassword,
   updateAdminPassword,
+  updateProfile,
   updateTeacherPassword,
 } from "../services/authentication.service";
 
@@ -64,6 +65,20 @@ const authenticationSlice = createSlice({
         state.loading = false;
       })
       .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Handling the updateProfile action
+      .addCase(updateProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.admin = action.payload;
+        state.loading = false;
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

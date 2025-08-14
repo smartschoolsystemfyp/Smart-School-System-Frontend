@@ -22,6 +22,23 @@ export const login = createAsyncThunk(
   }
 );
 
+export const updateProfile = createAsyncThunk(
+  "authntication/updateProfile",
+  async (profile, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.patch(
+        `/admin/update-profile`,
+        profile
+      );
+      toast.success(data.message);
+      return data.admin;
+    } catch (error) {
+      toast.error(error.response?.data.message);
+      return rejectWithValue(error.response?.data.message || error.message);
+    }
+  }
+);
+
 export const forgetPassword = createAsyncThunk(
   "authntication/forgetPassword",
   async (email, { rejectWithValue }) => {

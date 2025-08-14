@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logoutAdmin, logoutTeacher } from "../services/authentication.service";
+import { useDispatch } from "react-redux";
+import { logoutAdmin } from "../services/authentication.service";
 
 const AdminNavbar = () => {
   const dispatch = useDispatch();

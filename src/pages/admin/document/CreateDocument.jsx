@@ -1,22 +1,18 @@
-import React, { useEffect, useState } from "react";
-import {
-  getSubjectById,
-  updateSubject,
-} from "../../../services/subject.service";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../../components/Loader";
+import { createDocumet } from "../../../services/document&fund.service";
 
-const UpdateSubject = () => {
-  const { id } = useParams();
+const CreateDocument = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { subject, loading } = useSelector((state) => state.subject);
 
   const [formData, setFormData] = useState({
-    subjectName: "",
+    name: "",
     classId: "",
+    status: "",
   });
+
+  const { loading } = useSelector((state) => state.combine);
 
   const { classes, loading: classLoading } = useSelector(
     (state) => state.classes
@@ -29,38 +25,32 @@ const UpdateSubject = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateSubject({ _id: id, subject: formData }))
+    dispatch(createDocumet(formData))
       .unwrap()
-      .then(() => navigate("/admin/subjects"))
+      .then(() =>
+        setFormData({
+          name: "",
+          classId: "",
+          status: "",
+        })
+      )
       .catch((error) => {
-        console.error("Error updating subject:", error);
+        console.error("Error creating document:", error);
       });
   };
-
-  useEffect(() => {
-    if (subject) {
-      setFormData({
-        subjectName: subject.subjectName || "",
-        classId: subject.class || "",
-      });
-    }
-  }, [subject]);
-
-  useEffect(() => {
-    dispatch(getSubjectById(id));
-  }, [id]);
 
   return (
     <div className="flex items-center justify-center min-h-[88vh]">
       {classLoading && <Loader />}
+
       <section className="p-6 w-full max-w-md bg-white shadow-lg rounded-xl">
-        <h2 className="text-xl font-semibold mb-4">Update Subject</h2>
+        <h2 className="text-xl font-semibold mb-4">Create Document Record</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
             type="text"
-            name="subjectName"
-            placeholder="Subject Name"
-            value={formData.subjectName}
+            name="name"
+            placeholder="Student Name"
+            value={formData.name}
             onChange={handleChange}
             className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500"
             required
@@ -81,11 +71,26 @@ const UpdateSubject = () => {
             ))}
           </select>
 
+          <select
+            name="status"
+            value={formData.status}
+            onChange={handleChange}
+            className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500"
+            required
+          >
+            <option value="">Select Status</option>
+            {["Pending", "Recieved"].map((s, i) => (
+              <option key={i} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+
           <button
             type="submit"
             className="bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition"
           >
-            {loading ? " Updating..." : " Update Subject"}
+            {loading ? "Creating" : "Create Record"}
           </button>
         </form>
       </section>
@@ -93,4 +98,4 @@ const UpdateSubject = () => {
   );
 };
 
-export default UpdateSubject;
+export default CreateDocument;
