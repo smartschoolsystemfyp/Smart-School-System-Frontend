@@ -17,16 +17,16 @@ const Attendance = () => {
   );
   const [attendance, setAttendance] = useState({});
   const [hide, setHide] = useState(true);
-  const [formSubmitted, setFormSubmitted] = useState(false); // New state
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleClassChange = (e) => {
     setSelectedAuth(e.target.value);
   };
 
-  const toggleAttendance = (staffId) => {
+  const toggleAttendance = (staffId, status) => {
     setAttendance((prev) => ({
       ...prev,
-      [staffId]: prev[staffId] === "Present" ? "Absent" : "Present",
+      [staffId]: status,
     }));
   };
 
@@ -43,7 +43,7 @@ const Attendance = () => {
       .then(() => {
         navigate("/admin");
         setHide(true);
-        setFormSubmitted(false); // Reset form submission state
+        setFormSubmitted(false);
       })
       .catch((error) => {
         console.error("Error updating attendance:", error);
@@ -60,7 +60,7 @@ const Attendance = () => {
           return acc;
         }, {});
         setAttendance(defaultAttendance);
-        setFormSubmitted(true); // Set form as submitted
+        setFormSubmitted(true);
         setHide(false);
       });
   }
@@ -132,37 +132,38 @@ const Attendance = () => {
                   <td className="border p-2 text-center">{index + 1}</td>
                   <td className="border p-2 text-center">{staff.name}</td>
                   <td className="border p-2 text-center">
-                    <label
-                      className="inline-flex items-center cursor-pointer"
-                      htmlFor={`toggle-${staff._id}`}
-                    >
-                      <span className="mr-2 text-gray-700">
-                        {attendance[staff._id] || "Present"}
-                      </span>
-                      <input
-                        type="checkbox"
-                        id={`toggle-${staff._id}`}
-                        className="toggle-input hidden"
-                        checked={attendance[staff._id] === "Present"}
-                        onChange={() => toggleAttendance(staff._id)}
-                      />
-                      <div className="relative">
-                        <div
-                          className={`w-10 h-6 rounded-full ${
-                            attendance[staff._id] === "Present"
-                              ? "bg-green-500"
-                              : "bg-red-500"
-                          }`}
-                        ></div>
-                        <div
-                          className={`absolute w-4 h-4 rounded-full bg-white top-1 transition-transform ${
-                            attendance[staff._id] === "Present"
-                              ? "transform translate-x-6"
-                              : "transform translate-x-1"
-                          }`}
-                        ></div>
-                      </div>
-                    </label>
+                    <div className="flex justify-center space-x-2">
+                      <button
+                        className={`px-3 py-1 rounded ${
+                          attendance[staff._id] === "Present"
+                            ? "bg-green-500 text-white"
+                            : "bg-gray-200"
+                        }`}
+                        onClick={() => toggleAttendance(staff._id, "Present")}
+                      >
+                        Present
+                      </button>
+                      <button
+                        className={`px-3 py-1 rounded ${
+                          attendance[staff._id] === "Absent"
+                            ? "bg-red-500 text-white"
+                            : "bg-gray-200"
+                        }`}
+                        onClick={() => toggleAttendance(staff._id, "Absent")}
+                      >
+                        Absent
+                      </button>
+                      <button
+                        className={`px-3 py-1 rounded ${
+                          attendance[staff._id] === "Leave"
+                            ? "bg-yellow-500 text-white"
+                            : "bg-gray-200"
+                        }`}
+                        onClick={() => toggleAttendance(staff._id, "Leave")}
+                      >
+                        Leave
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

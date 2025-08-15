@@ -15,7 +15,6 @@ const Attendance = () => {
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
   );
-
   const [attendance, setAttendance] = useState({});
   const [hide, setHide] = useState(true);
 
@@ -31,10 +30,10 @@ const Attendance = () => {
     );
   };
 
-  const toggleAttendance = (studentId) => {
+  const toggleAttendance = (studentId, status) => {
     setAttendance((prev) => ({
       ...prev,
-      [studentId]: prev[studentId] === "Present" ? "Absent" : "Present",
+      [studentId]: status,
     }));
   };
 
@@ -71,7 +70,7 @@ const Attendance = () => {
         <div className="h-[70vh] flex justify-center items-center">
           <form
             onSubmit={handleFromSubmit}
-            className="bg-white p-6 rounded-lg  w-full max-w-md"
+            className="bg-white p-6 rounded-lg w-full max-w-md"
           >
             <div className="mb-4">
               <label className="font-medium text-gray-600">Select Class:</label>
@@ -129,20 +128,38 @@ const Attendance = () => {
                   <td className="border p-2 text-center">{index + 1}</td>
                   <td className="border p-2">{student.name}</td>
                   <td className="border p-2 text-center">
-                    <label
-                      className="inline-flex items-center cursor-pointer"
-                      htmlFor={`toggle-${student._id}`}
-                    >
-                      <span className="mr-2 text-gray-700"></span>
-                      <input
-                        type="checkbox"
-                        id={`toggle-${student._id}`}
-                        className="toggle-input hidden"
-                        checked={attendance[student._id] === "Present"}
-                        onChange={() => toggleAttendance(student._id)}
-                      />
-                      <span className="toggle-slider"></span>
-                    </label>
+                    <div className="flex justify-center space-x-2">
+                      <button
+                        className={`px-3 py-1 rounded text-sm ${
+                          attendance[student._id] === "Present"
+                            ? "bg-green-500 text-white"
+                            : "bg-gray-200"
+                        }`}
+                        onClick={() => toggleAttendance(student._id, "Present")}
+                      >
+                        Present
+                      </button>
+                      <button
+                        className={`px-3 py-1 rounded text-sm ${
+                          attendance[student._id] === "Absent"
+                            ? "bg-red-500 text-white"
+                            : "bg-gray-200"
+                        }`}
+                        onClick={() => toggleAttendance(student._id, "Absent")}
+                      >
+                        Absent
+                      </button>
+                      <button
+                        className={`px-3 py-1 rounded text-sm ${
+                          attendance[student._id] === "Leave"
+                            ? "bg-yellow-500 text-white"
+                            : "bg-gray-200"
+                        }`}
+                        onClick={() => toggleAttendance(student._id, "Leave")}
+                      >
+                        Leave
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
