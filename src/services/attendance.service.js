@@ -33,3 +33,31 @@ export const markStaffAttendance = createAsyncThunk(
     }
   }
 );
+
+export const getStaffAttendanceById = createAsyncThunk(
+  "attendance/getStaffAttendanceById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.get(`/attendance/staff/${id}`);
+      toast.success(data.message);
+      return data.attendanceRecords;
+    } catch (error) {
+      toast.error(error.response?.data.message);
+      return rejectWithValue(error.response?.data.message || error.message);
+    }
+  }
+);
+
+export const getStudentAttendanceById = createAsyncThunk(
+  "attendance/getStudentAttendanceById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.get(`/attendance/student/${id}`);
+      toast.success(data.message);
+      return data.attendanceRecords;
+    } catch (error) {
+      toast.error(error.response?.data.message);
+      return rejectWithValue(error.response?.data.message || error.message);
+    }
+  }
+);

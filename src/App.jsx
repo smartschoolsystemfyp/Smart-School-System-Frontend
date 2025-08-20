@@ -52,6 +52,12 @@ const CreateDocument = lazy(() =>
 const UpdateDocument = lazy(() =>
   import("./pages/admin/document/UpdateDocument")
 );
+const CheckAttendance = lazy(() =>
+  import("./pages/admin/attendance/CheckAttendance")
+);
+const CheckStudentAttendance = lazy(() =>
+  import("./pages/teacher/attendance/CheckAttendance")
+);
 
 const App = () => {
   const token = useGetToken();
@@ -99,6 +105,7 @@ const AdminRoutes = () => {
             <Routes>
               <Route path="" element={<AdminDashboard />} />
               <Route path="attendance/mark" element={<AdminAttendance />} />
+              <Route path="attendance/check" element={<CheckAttendance />} />
               <Route path="staffs" element={<Staff />} />
               <Route path="staff/create" element={<CreateStaff />} />
               <Route path="staff/:id" element={<UpdateStaff />} />
@@ -146,6 +153,7 @@ const TeacherRoutes = () => {
           <Route path="fee/mark" element={<MarkFeePaid />} />
           <Route path="marks" element={<UploadMarks />} />
           <Route path="attendance/mark" element={<Attendance />} />
+          <Route path="attendance/check" element={<CheckStudentAttendance />} />
           <Route path="settings" element={<Setting />} />
         </Routes>
       </Suspense>

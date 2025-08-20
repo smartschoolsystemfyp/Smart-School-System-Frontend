@@ -27,6 +27,7 @@ const Navbar = () => {
 
   const links = [
     { label: "Attendance", to: "/teacher/attendance/mark" },
+    { label: "Check Attendance", to: "/teacher/attendance/check" },
     { label: "Students", to: "/teacher/students" },
     { label: "Marks", to: "/teacher/marks" },
     { label: "Fees", to: "/teacher/fees" },

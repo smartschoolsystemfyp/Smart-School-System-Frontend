@@ -29,6 +29,11 @@ const menuItems = [
     path: "/admin/attendance/mark",
     icon: "fas fa-chalkboard-teacher",
   },
+  {
+    label: "Check Attendance",
+    path: "/admin/attendance/check",
+    icon: "fas fa-chalkboard-teacher",
+  },
   { label: "Funds Management", path: "/admin/funds", icon: "fas fa-coins" },
   {
     label: "Document Management",
