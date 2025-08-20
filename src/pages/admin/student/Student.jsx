@@ -100,7 +100,7 @@ const Student = () => {
                 // "Blood Group",
                 // "Religion",
                 // "Cast",
-                "Class",
+                "B-Form",
                 // "Orphan",
                 "Att %",
                 "Actions",
@@ -169,7 +169,7 @@ const Student = () => {
                     {student.cast}
                   </td> */}
                   <td className="py-3 px-4 border-b border-secondary">
-                    {student.class?.className || "Not Assigned"}
+                    {student.bFormNumber}
                   </td>
                   {/* <td className="py-3 px-4 border-b border-secondary">
                     {student.orphan}

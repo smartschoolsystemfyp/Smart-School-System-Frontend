@@ -9,6 +9,7 @@ const CreateSubject = () => {
   const [formData, setFormData] = useState({
     subjectName: "",
     classId: "",
+    totalMarks: "",
   });
 
   const { loading } = useSelector((state) => state.subject);
@@ -30,6 +31,7 @@ const CreateSubject = () => {
         setFormData({
           subjectName: "",
           classId: "",
+          totalMarks: "",
         })
       )
       .catch((error) => {
@@ -68,6 +70,16 @@ const CreateSubject = () => {
               </option>
             ))}
           </select>
+
+          <input
+            type="text"
+            name="totalMarks"
+            placeholder="Total Marks"
+            value={formData.totalMarks}
+            onChange={handleChange}
+            className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500"
+            required
+          />
 
           <button
             type="submit"

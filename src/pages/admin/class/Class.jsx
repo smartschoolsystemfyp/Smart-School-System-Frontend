@@ -54,14 +54,16 @@ const Class = () => {
         <table className="min-w-full text-left table-auto border-collapse text-[0.83rem] whitespace-nowrap">
           <thead>
             <tr className="bg-[#212121] text-gray-100 text-primary">
-              {["SR#", "Class", "Class Teacher", "Actions"].map((header) => (
-                <th
-                  key={header}
-                  className="text-[0.92rem] py-3 px-4 border-b border-secondary"
-                >
-                  {header}
-                </th>
-              ))}
+              {["SR#", "Class", "Class Teacher", "Status", "Actions"].map(
+                (header) => (
+                  <th
+                    key={header}
+                    className="text-[0.92rem] py-3 px-4 border-b border-secondary"
+                  >
+                    {header}
+                  </th>
+                )
+              )}
             </tr>
           </thead>
 
@@ -78,7 +80,9 @@ const Class = () => {
                   <td className="py-3 px-4 border-b border-secondary">
                     {cls?.teacher?.name || "Not Assigned"}
                   </td>
-
+                  <td className="py-3 px-4 border-b border-secondary">
+                    {cls?.status || "--"}
+                  </td>
                   <td className="py-3 pl-8 border-b border-secondary flex items-center space-x-2">
                     <Link to={`/admin/class/${cls._id}`}>
                       <button

@@ -6,12 +6,67 @@ import { useDispatch, useSelector } from "react-redux";
 const Fees = () => {
   const dispatch = useDispatch();
   const { fees } = useSelector((state) => state.fee);
-
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState("All");
 
-  const filteredFees = fees.filter((fee) =>
-    fee.student?.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Get unique months and years from the fees data
+  const months = [
+    "All",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const formatMonthDisplay = (monthValue) => {
+    if (monthValue === "All") return "All";
+
+    if (monthValue.includes("-")) {
+      const monthNum = parseInt(monthValue.split("-")[1]);
+      const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      return monthNames[monthNum - 1] || monthValue;
+    }
+
+    return monthValue;
+  };
+
+  const currentYear = new Date().getFullYear();
+  const years = [
+    "All",
+    ...Array.from({ length: 5 }, (_, i) => currentYear - i),
+  ];
+
+  const filteredFees = fees.filter((fee) => {
+    const matchesSearch = fee.student?.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesMonth =
+      selectedMonth === "All" ||
+      formatMonthDisplay(fee.month) === selectedMonth;
+
+    return matchesSearch && matchesMonth;
+  });
 
   function handleDelete(id) {}
 
@@ -34,26 +89,57 @@ const Fees = () => {
           </Link>
         </div>
 
-        <input
-          type="search"
-          placeholder="Search fee by student name"
-          className="border border-gray-400 rounded-md p-2 text-sm"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <div className="flex flex-col sm:flex-row gap-3">
+          <input
+            type="search"
+            placeholder="Search by student name"
+            className="border border-gray-400 rounded-md p-2 text-sm"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+
+          <div className="flex gap-2">
+            <select
+              className="border border-gray-400 rounded-md p-2 text-sm"
+              value={selectedMonth}
+              onChange={(e) => setSelectedMonth(e.target.value)}
+            >
+              {months.map((month) => (
+                <option key={month} value={month}>
+                  {month}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
       </div>
 
-      <div id="overflow" className="overflow-x-auto ">
+      {/* Filter summary */}
+      <div className="mb-4 px-2 text-sm text-gray-600">
+        Showing {filteredFees.length} records{" "}
+        {selectedMonth !== "All" && (
+          <span>
+            for {selectedMonth !== "All" && <span>{selectedMonth}</span>}
+            {selectedMonth !== "All" && <span> </span>}
+          </span>
+        )}
+        {searchTerm && <span> matching "{searchTerm}"</span>}
+      </div>
+
+      <div id="overflow" className="overflow-x-auto">
         <table className="min-w-full text-left table-auto border-collapse text-[0.83rem] whitespace-nowrap">
           <thead>
             <tr className="bg-gray-700 text-gray-100 text-primary">
               {[
                 "SR#",
+                "Roll No",
                 "Student Name",
-                "Class Name",
+                "Father Name",
                 "Month",
-                "Marked By",
+                // "Year",
+                // "Marked By",
                 "Fee Paid",
+                "Actions",
               ].map((header) => (
                 <th
                   key={header}
@@ -66,37 +152,61 @@ const Fees = () => {
           </thead>
 
           <tbody>
-            {filteredFees.length > 0 &&
+            {filteredFees.length > 0 ? (
               filteredFees.map((fee, index) => (
                 <tr key={fee._id} className="odd:bg-gray-200 hover:bg-gray-300">
                   <td className="py-3 px-4 border-b border-secondary">
                     {index + 1}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
+                    {fee.student?.rollNumber}
+                  </td>
+                  <td className="py-3 px-4 border-b border-secondary">
                     {fee.student?.name}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {fee.student.class?.className}
+                    {fee.student?.fatherName}
                   </td>
+                  {/* <td className="py-3 px-4 border-b border-secondary">
+                    {fee.student.class?.className}
+                  </td> */}
                   <td className="py-3 px-4 border-b border-secondary">
                     {fee.month}
                   </td>
-                  <td className="py-3 px-4 border-b border-secondary">
+                  {/* <td className="py-3 px-4 border-b border-secondary">
+                    {fee.year || new Date(fee.createdAt).getFullYear()}
+                  </td> */}
+                  {/* <td className="py-3 px-4 border-b border-secondary">
                     {fee.markedBy?.name || "Unknown"}
+                  </td> */}
+                  <td className="py-3 px-4 border-b border-secondary">
+                    <span
+                      className={`font-semibold ${
+                        fee.isSubmitted ? "text-green-500" : "text-red-500"
+                      }`}
+                    >
+                      {fee.isSubmitted ? "Paid" : "Not Paid"}
+                    </span>
                   </td>
-                  <td className="py-3 px-4 border-b border-secondary text-green-500 font-semibold">
-                    {fee.isSubmitted ? "Paid" : "Not Paid"}
+                  <td className="py-3 px-4 border-b border-secondary">
+                    <button
+                      onClick={() => handleDelete(fee._id)}
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      <i className="fas fa-trash"></i>
+                    </button>
                   </td>
                 </tr>
-              ))}
+              ))
+            ) : (
+              <tr>
+                <td colSpan="8" className="py-6 text-center text-gray-500">
+                  No fees records found
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
-
-        {filteredFees.length === 0 && (
-          <div className="h-[50vh] flex justify-center items-center text-sm">
-            No Student Found
-          </div>
-        )}
       </div>
     </section>
   );

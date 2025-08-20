@@ -14,6 +14,7 @@ const UpdateClass = () => {
   const { id } = useParams();
   const [className, setClassName] = useState("");
   const [teacherId, setTeacherId] = useState("");
+  const [status, setStatus] = useState("");
 
   const { staffs: teachers } = useSelector((state) => state.staff);
   const { loading, class: oneClass } = useSelector((state) => state.classes);
@@ -21,7 +22,10 @@ const UpdateClass = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      updateClass({ _id: id, classData: { className, teacher: teacherId } })
+      updateClass({
+        _id: id,
+        classData: { className, teacher: teacherId, status },
+      })
     )
       .unwrap()
       .then(() => navigate("/admin/class"))
@@ -32,8 +36,9 @@ const UpdateClass = () => {
 
   useEffect(() => {
     if (oneClass) {
-      setClassName(oneClass.className);
+      setClassName(oneClass.className || "");
       setTeacherId(oneClass.teacher?._id);
+      setStatus(oneClass.status || "");
     }
   }, [oneClass]);
 
@@ -76,6 +81,21 @@ const UpdateClass = () => {
               ))}
             </select>
           </div>
+
+          <select
+            name="status"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            className="border p-2 mb-4 rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+            required
+          >
+            <option value="">Select Status</option>
+            {["Active", "InActive"].map((s, i) => (
+              <option key={i} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
 
           <button
             type="submit"

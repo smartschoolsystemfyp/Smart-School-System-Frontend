@@ -88,7 +88,7 @@ const Fund = () => {
                     {index + 1}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
-                    {fund.date}
+                    {new Date(fund.date).toISOString().split("T")[0]}
                   </td>
                   <td className="py-3 px-4 border-b border-secondary">
                     RS {fund.amount} /-

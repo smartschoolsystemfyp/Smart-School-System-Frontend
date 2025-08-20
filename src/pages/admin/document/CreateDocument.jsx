@@ -10,6 +10,7 @@ const CreateDocument = () => {
     name: "",
     classId: "",
     status: "",
+    collectedBy: "",
   });
 
   const { loading } = useSelector((state) => state.combine);
@@ -32,6 +33,7 @@ const CreateDocument = () => {
           name: "",
           classId: "",
           status: "",
+          collectedBy: "",
         })
       )
       .catch((error) => {
@@ -78,13 +80,23 @@ const CreateDocument = () => {
             className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500"
             required
           >
-            <option value="">Select Status</option>
-            {["Pending", "Recieved"].map((s, i) => (
+            <option value="">Select Type</option>
+            {["Certificate", "Result Card"].map((s, i) => (
               <option key={i} value={s}>
                 {s}
               </option>
             ))}
           </select>
+
+          <input
+            type="text"
+            name="collectedBy"
+            placeholder="Collected By"
+            value={formData.collectedBy}
+            onChange={handleChange}
+            className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500"
+            required
+          />
 
           <button
             type="submit"

@@ -16,6 +16,7 @@ const UpdateSubject = () => {
   const [formData, setFormData] = useState({
     subjectName: "",
     classId: "",
+    totalMarks: "",
   });
 
   const { classes, loading: classLoading } = useSelector(
@@ -42,6 +43,7 @@ const UpdateSubject = () => {
       setFormData({
         subjectName: subject.subjectName || "",
         classId: subject.class || "",
+        totalMarks: subject.totalMarks || "",
       });
     }
   }, [subject]);
@@ -80,6 +82,16 @@ const UpdateSubject = () => {
               </option>
             ))}
           </select>
+
+          <input
+            type="text"
+            name="totalMarks"
+            placeholder="Total Marks"
+            value={formData.totalMarks}
+            onChange={handleChange}
+            className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500"
+            required
+          />
 
           <button
             type="submit"

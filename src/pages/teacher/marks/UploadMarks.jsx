@@ -4,6 +4,7 @@ import { getAllStudents } from "../../../services/student.service";
 import { getAllSubjects } from "../../../services/subject.service";
 import { bulkUploadMarks } from "../../../services/result.service";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const UploadMarks = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,12 @@ const UploadMarks = () => {
     }
   }, [selectedClass]);
 
-  const handleMarksChange = (student, subject, field, value) => {
+  const handleMarksChange = (student, subject, totalMarks, field, value) => {
+    if (parseInt(value) > parseInt(totalMarks)) {
+      toast.error("Obtained marks can't be greater than total marks");
+      return;
+    }
+
     setMarksData((prevData) => {
       const updatedData = [...prevData];
       const existingEntry = updatedData.find(
@@ -35,7 +41,7 @@ const UploadMarks = () => {
       if (existingEntry) {
         existingEntry[field] = value;
       } else {
-        updatedData.push({ student, subject, [field]: value });
+        updatedData.push({ student, subject, [field]: value, totalMarks });
       }
 
       return updatedData;
@@ -44,6 +50,21 @@ const UploadMarks = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validate marks before submission
+    const hasInvalidMarks = marksData.some((entry) => {
+      const marksObtained = parseInt(entry.marksObtained) || 0;
+      const totalMarks = parseInt(entry.totalMarks) || 100;
+      return marksObtained > totalMarks;
+    });
+
+    if (hasInvalidMarks) {
+      toast.error(
+        "Some marks are greater than total marks. Please correct them before submitting."
+      );
+      return;
+    }
+
     const formattedData = {
       examType,
       marksData: marksData.map((entry) => ({
@@ -53,6 +74,7 @@ const UploadMarks = () => {
         totalMarks: parseInt(entry.totalMarks) || 100,
       })),
     };
+
     dispatch(bulkUploadMarks(formattedData));
     navigate("/teacher");
   };
@@ -97,7 +119,7 @@ const UploadMarks = () => {
                     <th className="border p-3">Student Name</th>
                     {subjects.map((subject) => (
                       <th key={subject._id} className="border p-3">
-                        {subject.subjectName}
+                        {subject.subjectName} - ( {subject.totalMarks} )
                       </th>
                     ))}
                   </tr>
@@ -112,10 +134,13 @@ const UploadMarks = () => {
                             type="number"
                             placeholder="Marks"
                             className="border p-2 rounded w-20 text-center"
+                            min="0"
+                            max={subject.totalMarks}
                             onChange={(e) =>
                               handleMarksChange(
                                 student._id,
                                 subject._id,
+                                subject.totalMarks,
                                 "marksObtained",
                                 e.target.value
                               )
@@ -132,6 +157,7 @@ const UploadMarks = () => {
             <button
               type="submit"
               className="bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition mx-auto w-40"
+              disabled={loading}
             >
               {loading ? "Submitting..." : " Submit Marks"}
             </button>

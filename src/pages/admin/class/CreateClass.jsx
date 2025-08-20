@@ -7,13 +7,14 @@ const CreateClass = () => {
   const dispatch = useDispatch();
   const [className, setClassName] = useState("");
   const [teacherId, setTeacherId] = useState("");
+  const [status, setStatus] = useState("");
 
   const { staffs: teachers } = useSelector((state) => state.staff);
   const { loading } = useSelector((state) => state.classes);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createClass({ className, teacherId }));
+    dispatch(createClass({ className, teacherId, status }));
     setClassName("");
     setTeacherId("");
   };
@@ -54,13 +55,26 @@ const CreateClass = () => {
             </select>
           </div>
 
+          <select
+            name="status"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            className="border p-2 mb-4 rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+            required
+          >
+            <option value="">Select Status</option>
+            {["Active", "InActive"].map((s, i) => (
+              <option key={i} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
           >
-            {
-              loading ? "Creating..." : "Create Class"
-            }
+            {loading ? "Creating..." : "Create Class"}
           </button>
         </form>
       </div>

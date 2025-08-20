@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from "react";
-import {
-  getSubjectById,
-  updateSubject,
-} from "../../../services/subject.service";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../../components/Loader";
@@ -21,6 +17,7 @@ const UpdateDocument = () => {
     name: "",
     classId: "",
     status: "",
+    collectedBy: "",
   });
 
   const { classes, loading: classLoading } = useSelector(
@@ -48,6 +45,7 @@ const UpdateDocument = () => {
         name: document.name || "",
         classId: document.class || "",
         status: document.status || "",
+        collectedBy: document.collectedBy || "",
       });
     }
   }, [document]);
@@ -94,13 +92,23 @@ const UpdateDocument = () => {
             className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500"
             required
           >
-            <option value="">Select Status</option>
-            {["Pending", "Recieved"].map((s, i) => (
+            <option value="">Select Type</option>
+            {["Certificate", "Result Card"].map((s, i) => (
               <option key={i} value={s}>
                 {s}
               </option>
             ))}
           </select>
+
+          <input
+            type="text"
+            name="collectedBy"
+            placeholder="Collected By"
+            value={formData.collectedBy}
+            onChange={handleChange}
+            className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500"
+            required
+          />
 
           <button
             type="submit"

@@ -11,6 +11,8 @@ const Attendance = () => {
   const { staffs } = useSelector((state) => state.staff);
   const { loading } = useSelector((state) => state.attendance);
 
+  const activeStaffs = staffs.filter((staff) => staff.status === "Active");
+
   const [selectedAuth, setSelectedAuth] = useState("");
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
@@ -113,24 +115,30 @@ const Attendance = () => {
         </div>
       )}
 
-      {formSubmitted && staffs.length > 0 && (
+      {formSubmitted && activeStaffs.length > 0 && (
         <div className="overflow-x-auto">
           <table className="min-w-full text-left border-collapse text-sm">
             <thead>
               <tr className="bg-gray-700 text-gray-100">
                 <th className="border p-2">SR#</th>
                 <th className="border p-2 text-center">Staff Name</th>
+                <th className="border p-2 text-center">Father Name</th>
+                <th className="border p-2 text-center">Designation</th>
                 <th className="border p-2 text-center">Attendance</th>
               </tr>
             </thead>
             <tbody>
-              {staffs.map((staff, index) => (
+              {activeStaffs.map((staff, index) => (
                 <tr
                   key={staff._id}
                   className="odd:bg-gray-200 hover:bg-gray-300"
                 >
                   <td className="border p-2 text-center">{index + 1}</td>
                   <td className="border p-2 text-center">{staff.name}</td>
+                  <td className="border p-2 text-center">{staff.fatherName}</td>
+                  <td className="border p-2 text-center">
+                    {staff.designation}
+                  </td>
                   <td className="border p-2 text-center">
                     <div className="flex justify-center space-x-2">
                       <button
@@ -172,7 +180,7 @@ const Attendance = () => {
         </div>
       )}
 
-      {formSubmitted && staffs.length > 0 && (
+      {formSubmitted && activeStaffs.length > 0 && (
         <div className="text-center mt-6">
           <button
             onClick={handleSubmit}

@@ -62,6 +62,7 @@ const Attendance = () => {
     setHide(false);
   }
 
+
   return (
     <section className="p-6 max-w-[95%] mx-auto rounded-xl">
       <h2 className="text-xl font-semibold mb-4">Mark Attendance</h2>
@@ -115,7 +116,9 @@ const Attendance = () => {
             <thead>
               <tr className="bg-gray-700 text-gray-100">
                 <th className="border p-2">SR#</th>
+                <th className="border p-2">Roll No</th>
                 <th className="border p-2">Student Name</th>
+                <th className="border p-2">Father Name</th>
                 <th className="border p-2 text-center">Attendance</th>
               </tr>
             </thead>
@@ -126,7 +129,9 @@ const Attendance = () => {
                   className="odd:bg-gray-200 hover:bg-gray-300"
                 >
                   <td className="border p-2 text-center">{index + 1}</td>
+                  <td className="border p-2">{student.rollNumber}</td>
                   <td className="border p-2">{student.name}</td>
+                  <td className="border p-2">{student.fatherName}</td>
                   <td className="border p-2 text-center">
                     <div className="flex justify-center space-x-2">
                       <button
