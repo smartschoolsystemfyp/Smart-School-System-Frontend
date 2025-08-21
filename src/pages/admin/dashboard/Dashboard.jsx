@@ -77,8 +77,8 @@ const Dashboard = () => {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [
       {
-        label: "Attendance Percentage",
-        data: [95, 92, 90, 93, 96, 94],
+        label: "Funds Percentage",
+        data: [95, 202, 100, 93, 196, 94],
         borderColor: "#42A5F5",
         backgroundColor: "rgba(66, 165, 245, 0.4)",
         fill: true,
@@ -88,12 +88,27 @@ const Dashboard = () => {
   };
 
   const doughnutData = {
-    labels:
-      (insights && insights.subjectsName.map((item) => item.subjectName)) || [],
+    labels: [
+      "Six",
+      "Seven",
+      "Eight",
+      "Nine",
+      "Ten",
+      "First year",
+      "Second Year",
+    ],
     datasets: [
       {
-        data: [300, 250, 200],
-        backgroundColor: ["#4CAF50", "#FF9800", "#2196F3", "#E91E63"],
+        data: [100, 150, 120, 60, 80, 90, 100],
+        backgroundColor: [
+          "#4CAF50",
+          "#FF9800", // Orange
+          "#2196F3", // Blue
+          "#E91E63", // Pink
+          "#9C27B0", // Purple
+          "#00BCD4", // Cyan
+          "#FFC107", // Amber],
+        ],
       },
     ],
   };
@@ -121,7 +136,7 @@ const Dashboard = () => {
         {/* Doughnut Chart - Subject Enrollment */}
         <div className="bg-white border border-gray-300 rounded-lg p-6 flex flex-col items-center">
           <h3 className="text-lg font-semibold text-center mb-4">
-            Subject Enrollment
+            Class Strength
           </h3>
           <div className="w-72 h-72">
             <Doughnut data={doughnutData} />
@@ -131,7 +146,7 @@ const Dashboard = () => {
         {/* Line Chart - Attendance Trend */}
         <div className="bg-white border border-gray-300 rounded-lg p-6 flex flex-col items-center">
           <h3 className="text-lg font-semibold text-center mb-4">
-            Attendance Trend
+            Funds Trend
           </h3>
           <div className="w-full pt-16">
             <Line data={lineData} />
