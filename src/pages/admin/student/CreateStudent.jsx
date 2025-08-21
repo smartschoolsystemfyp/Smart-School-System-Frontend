@@ -37,6 +37,9 @@ const CreateStudent = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    console.log(formData)
+
     dispatch(createStudent(formData))
       .unwrap()
       .then(() =>

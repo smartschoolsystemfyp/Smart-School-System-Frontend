@@ -34,7 +34,7 @@ export const createStudent = createAsyncThunk(
       toast.success(data.message);
       return data.student;
     } catch (error) {
-      toast.error(error.responce.data.message);
+      toast.error(error.response.data.message);
       return rejectWithValue(error.response?.data.message || error.message);
     }
   }
